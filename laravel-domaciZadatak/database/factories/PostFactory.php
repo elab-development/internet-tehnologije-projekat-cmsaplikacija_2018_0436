@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 use App\Models\Post;
-use App\Models\User;
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,9 +15,10 @@ class PostFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence,
-            'content' => $this->faker->paragraphs(3, true),
-            'user_id' => User::factory(),
-            'category_id' => Category::factory(),
+            'content' => $this->faker->paragraphs(3, true), 
+            'extra' => $this->faker->paragraphs(3, true),
+            'user_id' => $this->faker->randomDigitNot(0),
+            'category_id' => $this->faker->randomDigitNot(0),
             'published_at' => now(),
         ];
     }

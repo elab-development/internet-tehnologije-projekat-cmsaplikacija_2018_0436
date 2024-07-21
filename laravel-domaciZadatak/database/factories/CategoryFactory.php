@@ -11,15 +11,15 @@ use Illuminate\Support\Str;
  */
 class CategoryFactory extends Factory
 {
-   protected $model = Category::class;
+   protected $model = Category::class; 
 
     public function definition()
     {
         $name = $this->faker->word;
         return [
-            'name' => ucfirst($name),
-            'slug' => Str::slug($name),
-            'description' => $this->faker->sentence,
+            'name' =>$this->faker->sentence($nbWords = 1, $variableNbWords = true),
+            'slug' =>$this->faker->sentence($nbWords = 1, $variableNbWords = true),
+            'description' =>$this->faker->sentence($nbWords = 3, $variableNbWords = true),
         ];
     }
 }
