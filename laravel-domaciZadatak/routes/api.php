@@ -14,6 +14,49 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+    // Prikaz svih kategorija
+    Route::get('/categories', [CategoryController::class, 'index']);
+
+    // Prikaz svih postova
+    Route::get('/posts', [PostController::class, 'index']);
+
+    // Prikaz svih postova za prikaz u Laravel Blade-u
+    Route::get('/posts/view', [PostController::class, 'indexView']);
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+
+    // KATEGORIJE
+    // Prikazivanje pojedinačne kategorije
+    Route::get('/categories/{id}', [CategoryController::class, 'show']);
+
+    // Kreiranje nove kategorije
+    Route::post('/categories', [CategoryController::class, 'store']);
+
+    // Ažuriranje postojeće kategorije
+    Route::put('/categories/{id}', [CategoryController::class, 'update']);
+
+    // Ažuriranje samo opisa kategorije
+    Route::patch('/categories/{id}/description', [CategoryController::class, 'updateDescription']);
+
+    // Brisanje kategorije
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
+
+    // POSTOVI
+    // Prikazivanje pojedinačnog posta
+    Route::get('/posts/{id}', [PostController::class, 'show']);
+
+    // Kreiranje novog posta
+    Route::post('/posts', [PostController::class, 'store']);
+
+    // Ažuriranje postojećeg posta
+    Route::put('/posts/{id}', [PostController::class, 'update']);
+
+    // Ažuriranje samo sadržaja posta
+    Route::patch('/posts/{id}/content', [PostController::class, 'updateContent']);
+
+    // Brisanje posta
+    Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+
 });
