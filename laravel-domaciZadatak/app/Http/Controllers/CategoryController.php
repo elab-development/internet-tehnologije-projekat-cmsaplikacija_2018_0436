@@ -3,63 +3,93 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Prikaz svih kategorija
     public function index()
     {
-        //
+        $categories = Category::all();
+        return CategoryResource::collection($categories);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // Prikazivanje pojedinačne kategorije
+    public function show($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return new CategoryResource($category);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Unos nove kategorije
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:categories|max:255',
+            'slug' => 'nullable|string',
+            'description' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json($errors);
+        }
+
+        $category = new Category();
+        $category->name = $request->name;
+        $category->slug = $request->slug;
+        $category->description = $request->description;
+        $category->save();
+
+        return response()->json(['Uspešno kreirana nova kategorija!', new CategoryResource($category)]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
+    // Ažuriranje informacija o kategoriji
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:categories,name,' . $id . '|max:255',
+            'slug' => 'nullable|string',
+            'description' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json($errors);
+        }
+
+        $category = Category::findOrFail($id);
+        $category->name = $request->name;
+        $category->slug = $request->slug;
+        $category->description = $request->description;
+        $category->save();
+
+        return response()->json(['Uspešno ažurirana kategorija!', new CategoryResource($category)]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Category $category)
+    // Ažuriranje samo opisa kategorije
+    public function updateDescription(Request $request, $id)
     {
-        //
+        $request->validate([
+            'description' => 'required|string'
+        ]);
+
+
+        $category = Category::findOrFail($id);
+        $category->update(['description' => $request->input('description')]);
+
+        return response()->json(['message' => 'Opis datog kategorije je uspešno izmenjen!', new CategoryResource($category)]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Category $category)
+    // Brisanje kategorije
+    public function destroy($id)
     {
-        //
-    }
+        $category = Category::findOrFail($id);
+        $category->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Category $category)
-    {
-        //
+        return response()->json('Uspešno obrisana kategorija!');
     }
 }
