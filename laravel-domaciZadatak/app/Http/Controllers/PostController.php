@@ -20,11 +20,11 @@ class PostController extends Controller
     // Prikaz svih postova u okviru Laravel Blade-a
     public function indexView()
     {
-        // Fetch paginated posts
-        $posts = Post::paginate(4);
+    // Fetch paginated posts (4 per page)
+    $posts = Post::paginate(6);
 
-        // Return the view with the paginated posts
-        return view('welcome', ['posts' => $posts]);
+    // Return the view with the paginated posts
+    return view('welcome', compact('posts'));
     }
 
     // Prikazivanje pojedinačnog posta

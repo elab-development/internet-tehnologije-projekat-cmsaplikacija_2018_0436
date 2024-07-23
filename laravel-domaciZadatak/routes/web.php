@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Ruta za prikaz svih postova u Laravel Blade-u
+Route::get('/posts/view', [PostController::class, 'indexView'])->name('posts.view');
 
 Route::get('/', function () {
     return view('welcome');
