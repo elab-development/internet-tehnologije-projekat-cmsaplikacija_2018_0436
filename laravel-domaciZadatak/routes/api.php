@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\Auth\AuthController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +27,22 @@ use App\Http\Controllers\PostController;
     // Prikaz svih postova za prikaz u Laravel Blade-u
     Route::get('/posts/view', [PostController::class, 'indexView']);
 
+    // Registracija
+    Route::post('/registracija', [AuthController::class, 'registracija']);
+
+    // Prijavljivanje
+    Route::post('/prijava', [AuthController::class, 'prijava']);
+
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+
+    // KORISNICI
+    // Prikazivanje svih korisnika
+    Route::get('/users', [UserController::class, 'index']); 
+    // Prikazivanje specificnog korisnika
+    Route::get('/users/{id}', [UserController::class, 'show']); 
 
     // KATEGORIJE
     // Prikazivanje pojedinačne kategorije
@@ -60,5 +75,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
     // Brisanje posta
     Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+
+    // Odjava korisnika
+    Route::post('/odjava', [AuthController::class, 'odjava']);
 
 });
