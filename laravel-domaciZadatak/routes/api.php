@@ -33,6 +33,8 @@ use App\Http\Controllers\Auth\AuthController;
     // Prijavljivanje
     Route::post('/prijava', [AuthController::class, 'prijava']);
 
+    // OpenWeather implementacija vracanja vremenske prognoze za prosledjeni grad
+    Route::get('/weather/{city}', [WeatherController::class, 'getCurrentWeather']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -80,3 +82,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::post('/odjava', [AuthController::class, 'odjava']);
 
 });
+
+
