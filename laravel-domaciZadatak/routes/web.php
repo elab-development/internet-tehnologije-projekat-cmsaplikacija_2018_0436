@@ -15,7 +15,3 @@ use App\Http\Controllers\PostController;
 
 // Ruta za prikaz svih postova u Laravel Blade-u
 Route::get('/posts/view', [PostController::class, 'indexView'])->name('posts.view');
-
-Route::get('/', function () {
-    return view('welcome');
-});

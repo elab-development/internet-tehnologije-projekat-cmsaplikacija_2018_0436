@@ -57,6 +57,7 @@ class PostController extends Controller
         $post->extra = $request->extra;
         $post->category_id = $request->category_id;
         $post->user_id = $user_id;
+        $post->published_at = now(); 
 
         $post->save();
 
@@ -96,27 +97,30 @@ class PostController extends Controller
         return response()->json(['Uspešno ažuriran post!', new PostResource($post)]);
     }
 
-    // Ažuriranje samo content-a posta
-    public function updateContent(Request $request, $id)
-    {
-        $user_id = Auth::user()->id;
+// Ažuriranje samo content-a posta
+public function updateContent(Request $request, $id)
+{
+    $user_id = Auth::user()->id;
 
-        $request->validate([
-            'content' => 'required'
-        ]);
+    $request->validate([
+        'content' => 'required'
+    ]);
 
-        $post_user_id = Post::where('id', $id)->value('user_id');
+    $post_user_id = Post::where('id', $id)->value('user_id');
 
-        if ($user_id != $post_user_id) {
-            return response()->json(['error' => 'Vi niste korisnik koji je kreirao ovaj post!'], 403);
-        }
-
-        $post = Post::findOrFail($id);
-
-        $post->update(['content' => $request->input('content')]);
-
-        return response()->json(['message' => 'Content datog posta je uspešno izmenjen!', new PostResource($post)]);
+    if ($user_id != $post_user_id) {
+        return response()->json(['error' => 'Vi niste korisnik koji je kreirao ovaj post!'], 403);
     }
+
+    $post = Post::findOrFail($id);
+
+    // Update only the content
+    $post->content = $request->input('content');
+    $post->save();
+
+    return response()->json(['message' => 'Content datog posta je uspešno izmenjen!', 'post' => new PostResource($post)]);
+}
+
 
     // Brisanje posta
     public function destroy($id)

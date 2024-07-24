@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -11,13 +12,13 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return response()->json($users);
+        return UserResource::collection($users);
     }
 
     // Vrati specificnog korisnika
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return response()->json($user);
+        return new UserResource($user);
     }
 }

@@ -81,7 +81,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->update(['description' => $request->input('description')]);
 
-        return response()->json(['message' => 'Opis datog kategorije je uspešno izmenjen!', new CategoryResource($category)]);
+        return response()->json(['message' => 'Opis date kategorije je uspešno izmenjen!', new CategoryResource($category)]);
     }
 
     // Brisanje kategorije

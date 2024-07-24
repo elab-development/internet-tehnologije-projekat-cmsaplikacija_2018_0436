@@ -5,45 +5,52 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Auth\AuthController;
-
+use App\Http\Controllers\OpenWeatherController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
+| Here is where you can register API routes for your application.
+| These routes are loaded by the RouteServiceProvider and will be
+| assigned to the "api" middleware group. Make something great!
 |
 */
 
-    // Prikaz svih kategorija
-    Route::get('/categories', [CategoryController::class, 'index']);
+Route::resource('users', UserController::class);
 
-    // Prikaz svih postova
-    Route::get('/posts', [PostController::class, 'index']);
+// Prikaz svih kategorija
+Route::get('/categories', [CategoryController::class, 'index']);
 
-    // Prikaz svih postova za prikaz u Laravel Blade-u
-    Route::get('/posts/view', [PostController::class, 'indexView']);
+// Prikaz svih postova
+Route::get('/posts', [PostController::class, 'index']);
 
-    // Registracija
-    Route::post('/registracija', [AuthController::class, 'registracija']);
+// Prikaz svih postova za prikaz u Laravel Blade-u
+Route::get('/posts/view', [PostController::class, 'indexView']);
 
-    // Prijavljivanje
-    Route::post('/prijava', [AuthController::class, 'prijava']);
+// Registracija
+Route::post('/registracija', [AuthController::class, 'registracija']);
 
-    // OpenWeather implementacija vracanja vremenske prognoze za prosledjeni grad
-    Route::get('/weather/{city}', [WeatherController::class, 'getCurrentWeather']);
+// Prijavljivanje
+Route::post('/prijava', [AuthController::class, 'prijava']);
 
+// OpenWeather implementacija vraćanja vremenske prognoze za prosleđeni grad
+Route::get('/weather/{city}', [OpenWeatherController::class, 'getCurrentWeather']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Rute koje zahtevaju autentifikaciju
+Route::middleware('auth:sanctum')->group(function () {
+    // Prikazivanje trenutnog korisnika
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 
     // KORISNICI
     // Prikazivanje svih korisnika
     Route::get('/users', [UserController::class, 'index']); 
-    // Prikazivanje specificnog korisnika
+
+    // Prikazivanje specifičnog korisnika
     Route::get('/users/{id}', [UserController::class, 'show']); 
 
     // KATEGORIJE
@@ -80,7 +87,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
     // Odjava korisnika
     Route::post('/odjava', [AuthController::class, 'odjava']);
-
 });
-
-

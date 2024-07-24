@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->nullable()->constrained()->onDelete('set null');
          });
     }
 
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->dropForeign(['category_id']);
             $table->dropColumn(['user_id', 'category_id']);
             });
-            
+
         });
     }
 };
