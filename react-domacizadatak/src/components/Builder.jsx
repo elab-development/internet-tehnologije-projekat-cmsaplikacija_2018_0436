@@ -1,9 +1,13 @@
-import React, { Component } from "react";
+import Sidebar from "./Sidebar";
+import Canvas from "./Canvas";
 
-export class Builder extends Component {
-  render() {
-    return <div>Builder</div>;
-  }
-}
+const Builder = () => {
+  return (
+    <div className="builderApp">
+      <Sidebar />
+      <Canvas />
+    </div>
+  );
+};
 
 export default Builder;
