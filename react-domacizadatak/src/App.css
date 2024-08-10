@@ -442,10 +442,9 @@ video {
 
 .banner-links {
   position: absolute;
-  top: 30%;
-  right: 1.5rem;
+  top: 79%;
+  right: 0.5rem;
   display: grid;
-  justify-items: center;
   row-gap: 0.5rem;
   opacity: 0;
   visibility: hidden;
@@ -462,26 +461,6 @@ video {
   font-size: 1.25rem;
   line-height: 1.25;
   color: var(--color-white-100);
-}
-
-.banner-links::before {
-  position: absolute;
-  content: "";
-  top: -3rem;
-  width: 4rem;
-  height: 1.5px;
-  transform: rotate(90deg);
-  background: var(--color-white-100);
-}
-
-.banner-links::after {
-  position: absolute;
-  content: "";
-  bottom: -3rem;
-  width: 4rem;
-  height: 1.5px;
-  transform: rotate(90deg);
-  background: var(--color-white-100);
 }
 
 .banner-link {
