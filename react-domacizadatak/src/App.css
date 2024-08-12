@@ -487,7 +487,6 @@ video {
 }
 svg {
   height: 23rem;
-  margin-right: 4rem;
 }
 
 #envelope {
@@ -643,6 +642,10 @@ form .icon {
   background-image: linear-gradient(131deg, #40a0ff, #3c53ff, #3c53ff, #3c53ff);
 }
 
+.dropdownBox {
+  margin-top: 2.5rem;
+}
+
 .dropdown {
   position: relative;
   display: block;
@@ -650,13 +653,14 @@ form .icon {
 }
 
 .dropdown-button {
-  background-color: #10d3c3;
+  background-image: linear-gradient(131deg, #40a0ff, #3c53ff, #3c53ff, #3c53ff);
   color: white;
   border: none;
   padding: 10px;
   cursor: pointer;
   width: 100%;
-  text-align: left;
+  text-align: center;
+  border-radius: 5rem;
 }
 
 .dropdown-content {
@@ -684,6 +688,11 @@ form .icon {
 .export-buttons {
   margin-top: 20px;
 }
+
+.btn-export-buttons {
+  margin-right: 20px;
+}
+
 .canvas {
   width: 100%;
   min-height: 200vh;

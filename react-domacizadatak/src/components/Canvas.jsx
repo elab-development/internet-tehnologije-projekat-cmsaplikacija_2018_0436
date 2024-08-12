@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import Navbar from "./components/Navbar/Navbar";
 import Navbar2 from "./components/Navbar/Navbar2";
@@ -10,7 +11,6 @@ import FeatureSection from "./components/FeatureSection/FeatureSection";
 import { ItemTypes } from "../utils/dragTypes";
 import Heading from "./components/Heading/Heading";
 import Paragraph from "./components/Heading/Paragraph";
-import Sidebar from "./components/SideBar/Sidebar";
 import { exportAsPNG, exportAsHTML } from "../utils/exportUtils";
 
 const Canvas = () => {
@@ -63,14 +63,32 @@ const Canvas = () => {
     showRemoveButtons();
   };
 
+  const navigate = useNavigate();
+
+  const handleReturnToHome = () => {
+    navigate("/");
+  };
+
   return (
     <div className="canvasOuter">
       <div className="export-buttons">
-        <button onClick={handleExportPNG} className="btn btn-primary">
-          Export as PNG
+        <button
+          onClick={handleExportPNG}
+          className="btn btn-primary btn-export-buttons"
+        >
+          Exportuj kreirani sajt kao PNG sliku
         </button>
-        <button className="btn btn-primary" onClick={handleExportHTML}>
-          Export as HTML
+        <button
+          className="btn btn-primary btn-export-buttons"
+          onClick={handleExportHTML}
+        >
+          Exportuj kreirani sajt u HTML fajl
+        </button>
+        <button
+          className="btn btn-primary btn-export-buttons"
+          onClick={handleReturnToHome}
+        >
+          Vrati se na pocetnu stranu
         </button>
       </div>
       <div ref={combinedRef} className="canvas">
@@ -98,9 +116,7 @@ const Canvas = () => {
             case "FEATURES":
               Component = FeatureSection;
               break;
-            case "SIDEBAR":
-              Component = Sidebar;
-              break;
+
             case "HEADING":
               Component = Heading;
               break;
