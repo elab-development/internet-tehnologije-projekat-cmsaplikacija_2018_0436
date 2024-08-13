@@ -1,6 +1,6 @@
 import React from "react";
 import { useDrag } from "react-dnd";
-import { ItemTypes } from "../utils/dragTypes";
+import { ItemTypes } from "../../utils/dragTypes";
 
 const DraggableComponent = ({ type, children }) => {
   const [, drag] = useDrag({

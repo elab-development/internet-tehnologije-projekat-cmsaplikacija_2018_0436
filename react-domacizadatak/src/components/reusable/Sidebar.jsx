@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DraggableComponent from "./DraggableComponent";
+import DraggableComponent from "../components/DraggableComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons"; // Import the icons you need
 

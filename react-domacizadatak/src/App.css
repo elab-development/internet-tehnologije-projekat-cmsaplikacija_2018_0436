@@ -252,6 +252,9 @@ video {
   justify-content: center;
   align-items: center;
   row-gap: 1.25rem;
+  margin-left: 2rem;
+  margin-top: 0.5rem;
+  padding: 2rem;
 }
 
 .menu-link {
@@ -324,14 +327,39 @@ video {
   user-select: none;
   order: -1;
   z-index: 10;
-  width: 1.6rem;
-  height: 1.15rem;
+  width: 2rem;
+  height: 1rem;
   border: none;
   outline: none;
   background: none;
   visibility: visible;
   transform: rotate(0deg);
   transition: 0.35s ease;
+}
+
+.main {
+  flex-direction: column;
+  align-items: center;
+}
+
+.banner-section {
+  flex-direction: column;
+  align-items: center;
+}
+
+.banner-column {
+  width: 100%;
+  text-align: center;
+}
+
+.banner-links {
+  flex-direction: column;
+  gap: 5px;
+}
+
+.banner-image {
+  width: 0%;
+  max-width: 0px;
 }
 
 @media only screen and (min-width: 48rem) {

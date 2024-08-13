@@ -57,7 +57,7 @@ const Navigacioni = () => {
     <header className="header" id="header">
       <nav className="navbar container">
         <NavLink to="/" className="brand">
-          Drag and drop dizajniranje sajta
+          CMS sajt
         </NavLink>
         <div className="burger" id="burger">
           <span className="burger-line"></span>

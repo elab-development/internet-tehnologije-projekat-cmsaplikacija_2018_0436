@@ -1,5 +1,5 @@
-import Sidebar from "./Sidebar";
-import Canvas from "./Canvas";
+import Sidebar from "../reusable/Sidebar";
+import Canvas from "../reusable/Canvas";
 
 const Builder = () => {
   return (

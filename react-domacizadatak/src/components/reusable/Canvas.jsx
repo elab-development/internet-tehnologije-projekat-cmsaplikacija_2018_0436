@@ -1,17 +1,17 @@
 import React, { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDrop } from "react-dnd";
-import Navbar from "./components/Navbar/Navbar";
-import Navbar2 from "./components/Navbar/Navbar2";
-import Footer from "./components/Footer/Footer";
-import HeroSection from "./components/HeroSection/Hero";
-import Card from "./components/Card/Card";
-import Card2 from "./components/Card/Card2";
-import FeatureSection from "./components/FeatureSection/FeatureSection";
-import { ItemTypes } from "../utils/dragTypes";
-import Heading from "./components/Heading/Heading";
-import Paragraph from "./components/Heading/Paragraph";
-import { exportAsPNG, exportAsHTML } from "../utils/exportUtils";
+import Navbar from "../components/Navbar/Navbar";
+import Navbar2 from "../components/Navbar/Navbar2";
+import Footer from "../components/Footer/Footer";
+import HeroSection from "../components/HeroSection/Hero";
+import Card from "../components/Card/Card";
+import Card2 from "../components/Card/Card2";
+import FeatureSection from "../components/FeatureSection/FeatureSection";
+import { ItemTypes } from "../../utils/dragTypes";
+import Heading from "../components/Heading/Heading";
+import Paragraph from "../components/Heading/Paragraph";
+import { exportAsPNG, exportAsHTML } from "../../utils/exportUtils";
 
 const Canvas = () => {
   const [components, setComponents] = useState([]);

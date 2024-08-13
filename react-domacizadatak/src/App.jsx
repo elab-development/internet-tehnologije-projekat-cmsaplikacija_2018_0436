@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import HomePage from "./components/HomePage";
+import HomePage from "./components/pages/HomePage";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Builder from "./components/Builder";
-import Contact from "./components/Contact";
+import Builder from "./components/pages/Builder";
+import Contact from "./components/pages/Contact";
 
 const App = () => {
   return (

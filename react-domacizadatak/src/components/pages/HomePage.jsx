@@ -1,13 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "../App.css";
-import iconImg from "../assets/icon.png";
-import photoImg from "../assets/photo.png";
+import "../../App.css";
+import iconImg from "../../assets/icon.png";
+import photoImg from "../../assets/photo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
-import Navigacioni from "./Navigacioni";
-import WeatherWidget from "../components/WeatherWidget";
+import Navigacioni from "../reusable/Navigacioni";
+import WeatherWidget from "../reusable/WeatherWidget";
 
 const HomePage = () => {
   return (

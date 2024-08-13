@@ -1,7 +1,7 @@
 import React from "react";
-import photoImg from "../assets/photo.png";
-import Navigacioni from "./Navigacioni";
-import useForm from "./hooks/useForm";
+import photoImg from "../../assets/photo.png";
+import Navigacioni from "../reusable/Navigacioni";
+import useForm from "../hooks/useForm";
 
 const Contact = () => {
   // Funkcija validacije forme
