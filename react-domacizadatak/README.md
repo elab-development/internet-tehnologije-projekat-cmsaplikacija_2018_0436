@@ -1,8 +1,16 @@
-# React + Vite
+# CMS - React domaći
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplikacija je kreirana kao ReactJS aplikacija koja ima za cilj da korisnicima omogući jednostavno i interaktivno kreiranje sajtova putem CMS (Content Management System) interfejsa sa drag-and-drop funkcionalnošću. Korisnici mogu bez napora dodavati, premestiti i prilagoditi različite komponente sajta koristeći intuitivan interfejs koji omogućava vizuelno upravljanje sadržajem.
 
-Currently, two official plugins are available:
+Projekat se sastoji od ukupno 3 ključne stranice, od kojih je stranica za kreiranje sajta istaknuta kao najvažniji deo sa najvećim brojem funkcionalnosti. Ova stranica pruža sve potrebne alate za pravljenje i uređivanje web stranica, uključujući dodavanje elemenata kao što su tekst, naslovi, navigacioni meniji i mnogo drugih komponenti.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+S obzirom da se radi o frontend aplikaciji, obezbeđeno je korišćenje lokalne memorije kako bi se sačuvali podaci o korisnikovim promenama i izborima tokom sesije programa. Ova funkcionalnost omogućava korisnicima da lako sačuvaju i nastave sa radom na svojim projektima bez gubitka podataka.
+
+## Pokretanje projekta
+
+```
+cd react-domacizadatak
+
+npm install
+npm run dev
+```

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDrop } from "react-dnd";
 import Navbar from "../components/Navbar/Navbar";
@@ -17,11 +17,26 @@ const Canvas = () => {
   const [components, setComponents] = useState([]);
   const canvasRef = useRef(null);
 
+  // Učitavanje spremljenih komponenti iz localStorage kada se Canvas učita
+  useEffect(() => {
+    const savedComponents = JSON.parse(localStorage.getItem("savedComponents"));
+    if (savedComponents) {
+      setComponents(savedComponents);
+    }
+  }, []);
+
+  // Funkcija za čuvanje komponenti u localStorage
+  const saveComponentsToLocalStorage = (components) => {
+    localStorage.setItem("savedComponents", JSON.stringify(components));
+  };
+
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.COMPONENT,
     drop: (item) => {
       const id = new Date().getTime();
-      setComponents([...components, { type: item.type, id }]);
+      const updatedComponents = [...components, { type: item.type, id }];
+      setComponents(updatedComponents);
+      saveComponentsToLocalStorage(updatedComponents); // Spremanje novog stanja
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
@@ -29,7 +44,11 @@ const Canvas = () => {
   });
 
   const handleRemoveComponent = (id) => {
-    setComponents(components.filter((component) => component.id !== id));
+    const updatedComponents = components.filter(
+      (component) => component.id !== id
+    );
+    setComponents(updatedComponents);
+    saveComponentsToLocalStorage(updatedComponents); // Spremanje novog stanja
   };
 
   const combinedRef = useCallback(
@@ -39,6 +58,7 @@ const Canvas = () => {
     },
     [drop]
   );
+
   const hideRemoveButtons = () => {
     document.querySelectorAll(".remove-button").forEach((button) => {
       button.style.display = "none";
@@ -116,7 +136,6 @@ const Canvas = () => {
             case "FEATURES":
               Component = FeatureSection;
               break;
-
             case "HEADING":
               Component = Heading;
               break;
