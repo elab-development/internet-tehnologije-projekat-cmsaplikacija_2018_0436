@@ -6,7 +6,7 @@ const Navigacioni = () => {
     const navbarMenu = document.getElementById("menu");
     const burgerMenu = document.getElementById("burger");
 
-    // Open Close Navbar Menu on Click Burger
+    // Funkcionalnost otvaranja/zatvaranje navigacionog menija na klik burger menija
     if (burgerMenu && navbarMenu) {
       const handleBurgerClick = () => {
         burgerMenu.classList.toggle("is-active");
@@ -15,42 +15,11 @@ const Navigacioni = () => {
 
       burgerMenu.addEventListener("click", handleBurgerClick);
 
-      // Cleanup event listeners on component unmount
+      // Kada sakrijemo burger meni, isto tako se brise i EventListener kako bi ponovo mogao u narednom kliku da obezbedi istu funkcionalnost
       return () => {
         burgerMenu.removeEventListener("click", handleBurgerClick);
       };
     }
-
-    // Close Navbar Menu on Click Menu Links
-    const handleMenuClick = () => {
-      burgerMenu.classList.remove("is-active");
-      navbarMenu.classList.remove("is-active");
-    };
-
-    document.querySelectorAll(".menu-link").forEach((link) => {
-      link.addEventListener("click", handleMenuClick);
-
-      // Cleanup event listeners on component unmount
-      return () => {
-        link.removeEventListener("click", handleMenuClick);
-      };
-    });
-
-    // Fixed Navbar Menu on Window Resize
-    const handleResize = () => {
-      if (window.innerWidth > 768) {
-        if (navbarMenu.classList.contains("is-active")) {
-          navbarMenu.classList.remove("is-active");
-        }
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup on component unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
   }, []);
 
   return (

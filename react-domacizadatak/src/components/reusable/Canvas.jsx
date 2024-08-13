@@ -14,8 +14,8 @@ import Paragraph from "../components/Heading/Paragraph";
 import { exportAsPNG, exportAsHTML } from "../../utils/exportUtils";
 
 const Canvas = () => {
-  const [components, setComponents] = useState([]);
-  const canvasRef = useRef(null);
+  const [components, setComponents] = useState([]); //sadrzi listu komponenti koje su prevucene na Canvas
+  const canvasRef = useRef(null); // referencira na ono sto se nalazi na "platnu" kako bi kasnije exportovali
 
   // Učitavanje spremljenih komponenti iz localStorage kada se Canvas učita
   useEffect(() => {
@@ -30,27 +30,22 @@ const Canvas = () => {
     localStorage.setItem("savedComponents", JSON.stringify(components));
   };
 
+  // Konfiguracija za drag-and-drop
   const [{ isOver }, drop] = useDrop({
-    accept: ItemTypes.COMPONENT,
+    accept: ItemTypes.COMPONENT, // Tip koji se može drop-ovati
     drop: (item) => {
+      // Funkcija koja se poziva kada se komponenta drop-uje
       const id = new Date().getTime();
       const updatedComponents = [...components, { type: item.type, id }];
       setComponents(updatedComponents);
       saveComponentsToLocalStorage(updatedComponents); // Spremanje novog stanja
     },
     collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
+      isOver: !!monitor.isOver(), // Da li se komponenta trenutno nalazi iznad drop zone
     }),
   });
 
-  const handleRemoveComponent = (id) => {
-    const updatedComponents = components.filter(
-      (component) => component.id !== id
-    );
-    setComponents(updatedComponents);
-    saveComponentsToLocalStorage(updatedComponents); // Spremanje novog stanja
-  };
-
+  // Kombinovana referenca za Canvas element i drop zonu
   const combinedRef = useCallback(
     (node) => {
       drop(node);
@@ -59,30 +54,44 @@ const Canvas = () => {
     [drop]
   );
 
+  // Funkcija za uklanjanje dropovane komponente sa Canvas-a
+  const handleRemoveComponent = (id) => {
+    const updatedComponents = components.filter(
+      (component) => component.id !== id
+    );
+    setComponents(updatedComponents);
+    saveComponentsToLocalStorage(updatedComponents); // Spremanje novog stanja
+  };
+
+  // Funkcija za skrivanje dugmadi za uklanjanje komponenti
   const hideRemoveButtons = () => {
     document.querySelectorAll(".remove-button").forEach((button) => {
       button.style.display = "none";
     });
   };
 
+  // Funkcija za prikazivanje dugmadi za uklanjanje komponenti
   const showRemoveButtons = () => {
     document.querySelectorAll(".remove-button").forEach((button) => {
       button.style.display = "block";
     });
   };
 
+  // Funkcija za eksportovanje kreiranog sajta kroz PNG sliku
   const handleExportPNG = () => {
     hideRemoveButtons();
     exportAsPNG(canvasRef.current, "design.png").then(() => {
       showRemoveButtons();
     });
   };
+  // Funkcija za eksportovanje kreiranog sajta kroz HTML fajl
   const handleExportHTML = () => {
     hideRemoveButtons();
     exportAsHTML(canvasRef.current, "design.html");
     showRemoveButtons();
   };
 
+  // Navigacija za povratak na početnu stranicu
   const navigate = useNavigate();
 
   const handleReturnToHome = () => {
@@ -148,6 +157,7 @@ const Canvas = () => {
 
           return (
             <div key={component.id} className="component-wrapper">
+              {/* Mesto za unosenje proizvoljne komponente koja se prevuce! */}
               <Component />
               <button
                 onClick={() => handleRemoveComponent(component.id)}
@@ -158,7 +168,7 @@ const Canvas = () => {
             </div>
           );
         })}
-        {isOver && <div className="overlay">Drop here!</div>}
+        {isOver && <div className="overlay">Prevuci ovde!</div>}
       </div>
     </div>
   );
