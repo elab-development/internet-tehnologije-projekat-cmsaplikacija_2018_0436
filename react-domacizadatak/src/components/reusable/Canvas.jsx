@@ -63,14 +63,14 @@ const Canvas = () => {
     saveComponentsToLocalStorage(updatedComponents); // Spremanje novog stanja
   };
 
-  // Funkcija za skrivanje dugmadi za uklanjanje komponenti
+  // Funkcija za skrivanje dugmadi
   const hideRemoveButtons = () => {
     document.querySelectorAll(".remove-button").forEach((button) => {
       button.style.display = "none";
     });
   };
 
-  // Funkcija za prikazivanje dugmadi za uklanjanje komponenti
+  // Funkcija za prikazivanje dugmadi
   const showRemoveButtons = () => {
     document.querySelectorAll(".remove-button").forEach((button) => {
       button.style.display = "block";
