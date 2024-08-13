@@ -7,40 +7,40 @@ const Footer = () => {
       id: 1,
       bgColor: "#ffffff",
       textColor: "#000000",
-      title: "company",
+      title: "Kompanija",
       links: [
-        "about us",
-        "our services",
-        "privacy policy",
-        "affiliate program",
+        "O nama",
+        "Nase usluge",
+        "Politika privatnosti",
+        "Affiliate program",
       ],
     },
     {
       id: 2,
       bgColor: "#ffffff",
       textColor: "#000000",
-      title: "get help",
-      links: ["FAQ", "shipping", "returns", "order status", "payment options"],
+      title: "Pomoc",
+      links: [
+        "FAQ",
+        "Dostava",
+        "Povracaj novca",
+        "Status porudzbine",
+        "Opcije placanja",
+      ],
     },
     {
       id: 3,
       bgColor: "#ffffff",
       textColor: "#000000",
-      title: "online shop",
-      links: ["watch", "bag", "shoes", "dress"],
+      title: "Internet prodavnica",
+      links: ["Satovi", "Torbe", "Cipele", "Haljine"],
     },
     {
       id: 4,
       bgColor: "#ffffff",
       textColor: "#000000",
-      title: "follow us",
-      socialLinks: ["facebook", "twitter", "instagram", "linkedin"],
-      socialIcons: [
-        "fab fa-facebook-f",
-        "fab fa-twitter",
-        "fab fa-instagram",
-        "fab fa-linkedin-in",
-      ],
+      title: "Zaprati nas na drustvenim mrezama!",
+      links: ["Facebook", "Instagram", "Pinterest", "TikTok"],
     },
   ]);
 
@@ -98,7 +98,7 @@ const Footer = () => {
           {sections.map((section) => (
             <div key={section.id} className="editor-section">
               <h3>{section.title} Customization</h3>
-              <label>Background Color: </label>
+              <label>Boja pozadine: </label>
               <input
                 type="color"
                 value={section.bgColor}
@@ -107,7 +107,7 @@ const Footer = () => {
                 }
               />
               <br />
-              <label>Text Color: </label>
+              <label>Boja teksta: </label>
               <input
                 type="color"
                 value={section.textColor}
@@ -116,7 +116,7 @@ const Footer = () => {
                 }
               />
               <br />
-              <label>Title: </label>
+              <label>Naslov: </label>
               <input
                 type="text"
                 value={section.title}
@@ -143,35 +143,13 @@ const Footer = () => {
                   ))}
                 </>
               )}
-              {section.socialLinks && (
-                <>
-                  <label>Social Links: </label>
-                  {section.socialLinks.map((link, index) => (
-                    <div key={index}>
-                      <input
-                        type="text"
-                        value={link}
-                        onChange={(e) => {
-                          const newSocialLinks = [...section.socialLinks];
-                          newSocialLinks[index] = e.target.value;
-                          updateSection(
-                            section.id,
-                            "socialLinks",
-                            newSocialLinks
-                          );
-                        }}
-                      />
-                    </div>
-                  ))}
-                </>
-              )}
             </div>
           ))}
           <button
             onClick={() => setShowCustomization(false)}
             className="remove-customization-button"
           >
-            Remove Customization
+            Zavrsi dizajniranje
           </button>
         </div>
       )}

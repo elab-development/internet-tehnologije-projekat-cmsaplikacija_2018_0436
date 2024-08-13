@@ -6,10 +6,10 @@ const Navbar2 = () => {
   const [textColor, setTextColor] = useState("#ffffff");
   const [logoText, setLogoText] = useState("Logo");
   const [menuItems, setMenuItems] = useState([
-    "Home",
-    "Services",
-    "About",
-    "Contact",
+    "Pocetna",
+    "Usluge",
+    "O nama",
+    "Kontakt",
   ]);
   const [showCustomization, setShowCustomization] = useState(true);
 
@@ -44,7 +44,7 @@ const Navbar2 = () => {
       {showCustomization && (
         <div className="editor">
           <div className="editor-section">
-            <label>Background Color: </label>
+            <label>Boja pozadine: </label>
             <input
               type="color"
               value={bgColor}
@@ -52,7 +52,7 @@ const Navbar2 = () => {
             />
           </div>
           <div className="editor-section">
-            <label>Text Color: </label>
+            <label>Boja teksta: </label>
             <input
               type="color"
               value={textColor}
@@ -60,7 +60,7 @@ const Navbar2 = () => {
             />
           </div>
           <div className="editor-section">
-            <label>Logo Text: </label>
+            <label>Tekst unutar logoa: </label>
             <input
               type="text"
               value={logoText}
@@ -68,7 +68,7 @@ const Navbar2 = () => {
             />
           </div>
           <div className="editor-section">
-            <label>Menu Items: </label>
+            <label>Stavke menija: </label>
             <br></br>
             {menuItems.map((item, index) => (
               <input
@@ -83,7 +83,7 @@ const Navbar2 = () => {
             onClick={() => setShowCustomization(false)}
             className="remove-customization-button"
           >
-            Remove Customization
+            Zavrsi dizajniranje
           </button>
         </div>
       )}

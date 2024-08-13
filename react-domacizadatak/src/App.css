@@ -173,7 +173,7 @@ video {
 .btn-darken {
   padding: 0.75rem 2rem;
   color: var(--color-white-100);
-  background-color: var(--color-black-200);
+  background-color: #3f63f0;
   box-shadow: var(--shadow-medium);
   transition: all 0.8 ease;
   border: none;
@@ -764,4 +764,21 @@ form .icon {
 
 .remove-customization-button:hover {
   background-color: #ff1a1a;
+}
+
+.weather-widget {
+  padding: 20px;
+  background-color: #3c53ff;
+  border-radius: 5px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.weather-widget h2 {
+  margin: 0 0 10px;
+}
+
+.weather-widget p {
+  font-size: 24px;
+  font-weight: bold;
 }

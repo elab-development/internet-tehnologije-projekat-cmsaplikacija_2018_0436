@@ -33,29 +33,29 @@ const Paragraph = () => {
 
       {showCustomization && (
         <div className="editor">
-          <h3>Paragraph Customization</h3>
-          <label>Paragraph Text: </label>
+          <h3>Dizajniranje paragrafa</h3>
+          <label>Tekst u paragrafu: </label>
           <input
             type="text"
             value={paragraph.text}
             onChange={(e) => updateParagraph("text", e.target.value)}
           />
           <br />
-          <label>Margin Left: </label>
+          <label>Leva margina: </label>
           <input
             type="text"
             value={paragraph.marginLeft}
             onChange={(e) => updateParagraph("marginLeft", e.target.value)}
           />
           <br />
-          <label>Text Color: </label>
+          <label>Boja teksta: </label>
           <input
             type="color"
             value={paragraph.textColor}
             onChange={(e) => updateParagraph("textColor", e.target.value)}
           />
           <br />
-          <label>Background Color: </label>
+          <label>Boja pozadine: </label>
           <input
             type="color"
             value={paragraph.bgColor}
@@ -66,7 +66,7 @@ const Paragraph = () => {
             onClick={() => setShowCustomization(false)}
             className="remove-customization-button"
           >
-            Remove Customization
+            Zavrsi dizajniranje
           </button>
         </div>
       )}

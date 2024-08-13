@@ -26,7 +26,7 @@ const HeroSection = () => {
       {showCustomization && (
         <div className="editor">
           <div className="editor-section">
-            <label>Background Color: </label>
+            <label>Boja pozadine: </label>
             <input
               type="color"
               value={bgColor}
@@ -34,7 +34,7 @@ const HeroSection = () => {
             />
           </div>
           <div className="editor-section">
-            <label>Text Color: </label>
+            <label>Boja teksta: </label>
             <input
               type="color"
               value={textColor}
@@ -42,7 +42,7 @@ const HeroSection = () => {
             />
           </div>
           <div className="editor-section">
-            <label>Heading Text: </label>
+            <label>Naslovni tekst: </label>
             <input
               type="text"
               value={headingText}
@@ -50,7 +50,7 @@ const HeroSection = () => {
             />
           </div>
           <div className="editor-section">
-            <label>Paragraph Text: </label>
+            <label>Tekst u paragrafu: </label>
             <input
               type="text"
               value={paragraphText}
@@ -58,7 +58,7 @@ const HeroSection = () => {
             />
           </div>
           <div className="editor-section">
-            <label>Button Text: </label>
+            <label>Tekst unutar dugmeta: </label>
             <input
               type="text"
               value={buttonText}
@@ -69,7 +69,7 @@ const HeroSection = () => {
             onClick={() => setShowCustomization(false)}
             className="remove-customization-button"
           >
-            Remove Customization
+            Zavrsi dizajniranje
           </button>
         </div>
       )}

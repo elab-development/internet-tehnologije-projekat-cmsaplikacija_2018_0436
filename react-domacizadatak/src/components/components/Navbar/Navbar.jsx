@@ -3,9 +3,9 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <ul>
-        <li>Home</li>
-        <li>About</li>
-        <li>Contact</li>
+        <li>Pocetna stranica</li>
+        <li>O nama</li>
+        <li>Kontakt</li>
       </ul>
     </nav>
   );

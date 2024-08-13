@@ -30,29 +30,29 @@ const Heading = () => {
 
       {showCustomization && (
         <div className="editor">
-          <h3>Heading Customization</h3>
-          <label>Heading Text: </label>
+          <h3>Dizajniranje naslova</h3>
+          <label>Tekst naslova: </label>
           <input
             type="text"
             value={heading.text}
             onChange={(e) => updateHeading("text", e.target.value)}
           />
           <br />
-          <label>Margin Left: </label>
+          <label>Leva margina: </label>
           <input
             type="text"
             value={heading.marginLeft}
             onChange={(e) => updateHeading("marginLeft", e.target.value)}
           />
           <br />
-          <label>Text Color: </label>
+          <label>Boja teksta: </label>
           <input
             type="color"
             value={heading.textColor}
             onChange={(e) => updateHeading("textColor", e.target.value)}
           />
           <br />
-          <label>Background Color: </label>
+          <label>Boja pozadine: </label>
           <input
             type="color"
             value={heading.bgColor}
@@ -63,7 +63,7 @@ const Heading = () => {
             onClick={() => setShowCustomization(false)}
             className="remove-customization-button"
           >
-            Remove Customization
+            Zavrsi dizajniranje
           </button>
         </div>
       )}

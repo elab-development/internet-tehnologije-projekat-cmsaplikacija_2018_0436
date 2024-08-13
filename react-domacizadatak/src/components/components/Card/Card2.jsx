@@ -7,9 +7,9 @@ const Card2 = () => {
       id: 1,
       bgColor: "#ffffff",
       textColor: "#000000",
-      title: "Card 1",
-      description: "This is a description for card 1.",
-      buttonText: "Learn More",
+      title: "Kartica 1",
+      description: "Opis za karticu 1.",
+      buttonText: "Nauci vise",
       imgSrc:
         "https://images.unsplash.com/photo-1505330622279-bf7d7fc918f4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8d2Vic2l0ZXxlbnwwfHwwfHx8MA%3D%3D",
     },
@@ -17,9 +17,9 @@ const Card2 = () => {
       id: 2,
       bgColor: "#ffffff",
       textColor: "#000000",
-      title: "Card 2",
-      description: "This is a description for card 2.",
-      buttonText: "Learn More",
+      title: "Kartica 2",
+      description: "Opis za karticu 2.",
+      buttonText: "Nauci vise",
       imgSrc:
         "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHdlYnNpdGV8ZW58MHx8MHx8fDA%3D",
     },
@@ -27,9 +27,9 @@ const Card2 = () => {
       id: 3,
       bgColor: "#ffffff",
       textColor: "#000000",
-      title: "Card 3",
-      description: "This is a description for card 3.",
-      buttonText: "Learn More",
+      title: "Kartica 3",
+      description: "Opis za karticu 3.",
+      buttonText: "Nauci vise",
       imgSrc:
         "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHdlYnNpdGV8ZW58MHx8MHx8fDA%3D",
     },
@@ -71,14 +71,14 @@ const Card2 = () => {
           {cards.map((card) => (
             <div key={card.id} className="editor-section">
               <h3>Card {card.id} Customization</h3>
-              <label>Background Color: </label>
+              <label>Boja pozadine: </label>
               <input
                 type="color"
                 value={card.bgColor}
                 onChange={(e) => updateCard(card.id, "bgColor", e.target.value)}
               />
               <br />
-              <label>Text Color: </label>
+              <label>Boja teksta: </label>
               <input
                 type="color"
                 value={card.textColor}
@@ -87,14 +87,14 @@ const Card2 = () => {
                 }
               />
               <br />
-              <label>Title: </label>
+              <label>Naslov: </label>
               <input
                 type="text"
                 value={card.title}
                 onChange={(e) => updateCard(card.id, "title", e.target.value)}
               />
               <br />
-              <label>Description: </label>
+              <label>Opis: </label>
               <input
                 type="text"
                 value={card.description}
@@ -103,7 +103,7 @@ const Card2 = () => {
                 }
               />
               <br />
-              <label>Button Text: </label>
+              <label>Tekst na dugmetu: </label>
               <input
                 type="text"
                 value={card.buttonText}
@@ -117,7 +117,7 @@ const Card2 = () => {
             onClick={() => setShowCustomization(false)}
             className="remove-customization-button"
           >
-            Remove Customization
+            Zavrsi dizajniranje
           </button>
         </div>
       )}

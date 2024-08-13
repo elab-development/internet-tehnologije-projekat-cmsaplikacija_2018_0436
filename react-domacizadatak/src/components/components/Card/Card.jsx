@@ -28,7 +28,7 @@ const Card = () => {
             />
           </div>
           <div className="editor-section">
-            <label>Text Color: </label>
+            <label>Boja teksta: </label>
             <input
               type="color"
               value={textColor}
@@ -36,7 +36,7 @@ const Card = () => {
             />
           </div>
           <div className="editor-section">
-            <label>Title Text: </label>
+            <label>Naslovni tekst: </label>
             <input
               type="text"
               value={titleText}
@@ -44,7 +44,7 @@ const Card = () => {
             />
           </div>
           <div className="editor-section">
-            <label>Description Text: </label>
+            <label>Tekst za opis: </label>
             <input
               type="text"
               value={descriptionText}
@@ -55,7 +55,7 @@ const Card = () => {
             onClick={() => setShowCustomization(false)}
             className="remove-customization-button"
           >
-            Remove Customization
+            Zavrsi dizajniranje
           </button>
         </div>
       )}

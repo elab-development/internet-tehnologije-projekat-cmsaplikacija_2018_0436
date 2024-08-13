@@ -134,7 +134,7 @@ const Canvas = () => {
                 onClick={() => handleRemoveComponent(component.id)}
                 className="remove-button"
               >
-                Remove
+                Ukloni komponentu
               </button>
             </div>
           );

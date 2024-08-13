@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import Navigacioni from "./Navigacioni";
+import WeatherWidget from "../components/WeatherWidget";
 
 const HomePage = () => {
   return (
@@ -44,6 +45,7 @@ const HomePage = () => {
               </div>
             </div>
           </section>
+          <WeatherWidget />
           <h1 className="heading-xss">Domaci zadatak iz React-a, 2024.</h1>
         </main>
       </div>

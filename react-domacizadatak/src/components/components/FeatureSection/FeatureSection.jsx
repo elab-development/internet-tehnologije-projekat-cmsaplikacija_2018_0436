@@ -7,25 +7,22 @@ const FeatureSection = () => {
       id: 1,
       bgColor: "#ffffff",
       textColor: "#000000",
-      icon: "fas fa-cogs",
-      title: "Customizable",
-      description: "Easily customize your experience to fit your needs.",
+      title: "Prilagodljiv",
+      description: "Lako prilagodi sajt svojim potrebama.",
     },
     {
       id: 2,
       bgColor: "#ffffff",
       textColor: "#000000",
-      icon: "fas fa-shield-alt",
-      title: "Secure",
-      description: "Top-notch security to protect your data.",
+      title: "Bezbedan",
+      description: "Visoka pouzdanost stiti tvoje podatke.",
     },
     {
       id: 3,
       bgColor: "#ffffff",
       textColor: "#000000",
-      icon: "fas fa-tachometer-alt",
-      title: "Fast",
-      description: "Optimized for speed and performance.",
+      title: "Brz",
+      description: "Optimizovan za brzinu i performanse.",
     },
   ]);
 
@@ -62,8 +59,8 @@ const FeatureSection = () => {
         <div className="editor">
           {features.map((feature) => (
             <div key={feature.id} className="editor-section">
-              <h3>Feature {feature.id} Customization</h3>
-              <label>Background Color: </label>
+              <h3>Namestanje dizajna za {feature.id}. karticu </h3>
+              <label>Boja pozadine: </label>
               <input
                 type="color"
                 value={feature.bgColor}
@@ -72,7 +69,7 @@ const FeatureSection = () => {
                 }
               />
               <br />
-              <label>Text Color: </label>
+              <label>Boja teksta: </label>
               <input
                 type="color"
                 value={feature.textColor}
@@ -81,16 +78,8 @@ const FeatureSection = () => {
                 }
               />
               <br />
-              <label>Icon Class: </label>
-              <input
-                type="text"
-                value={feature.icon}
-                onChange={(e) =>
-                  updateFeature(feature.id, "icon", e.target.value)
-                }
-              />
-              <br />
-              <label>Title: </label>
+
+              <label>Naslov: </label>
               <input
                 type="text"
                 value={feature.title}
@@ -99,7 +88,7 @@ const FeatureSection = () => {
                 }
               />
               <br />
-              <label>Description: </label>
+              <label>Opis: </label>
               <input
                 type="text"
                 value={feature.description}
@@ -113,7 +102,7 @@ const FeatureSection = () => {
             onClick={() => setShowCustomization(false)}
             className="remove-customization-button"
           >
-            Remove Customization
+            Zavrsi dizajniranje
           </button>
         </div>
       )}
