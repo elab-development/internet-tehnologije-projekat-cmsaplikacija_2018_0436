@@ -1,101 +1,126 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Menu, Button, Layout } from "antd";
 import Link from "next/link";
+import { useWindowWidth } from "@react-hook/window-size";
 import {
-  AppstoreOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
   PieChartOutlined,
-  DesktopOutlined,
-  ContainerOutlined,
   MailOutlined,
+  PushpinOutlined,
+  CameraOutlined,
+  UserSwitchOutlined,
+  SettingOutlined,
+  BgColorsOutlined,
+  UserOutlined,
+  CommentOutlined,
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 const AdminNav = () => {
+  // state
   const [collapsed, setCollapsed] = useState(false);
+  const [current, setCurrent] = useState("");
+  // hooks
+  const onlyWidth = useWindowWidth();
+
+  useEffect(() => {
+    process.browser && setCurrent(window.location.pathname);
+  }, [process.browser && window.location.pathname]);
+
+  useEffect(() => {
+    if (onlyWidth < 800) {
+      setCollapsed(true);
+    } else if (onlyWidth > 800) {
+      setCollapsed(false);
+    }
+  }, [onlyWidth < 800]);
+
+  const activeName = (name) => `${current === name && "active"}`;
 
   return (
-    <Sider collapsible>
+    <Sider
+      collapsible
+      collapsed={collapsed}
+      onCollapse={() => setCollapsed(!collapsed)}
+    >
       <Menu
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1", "sub2"]}
+        // defaultSelectedKeys={["1"]}
+        defaultOpenKeys={["2", "6", "10"]}
         mode="inline"
         inlineCollapsed={collapsed}
       >
-        <Menu.Item key="1" icon={<PieChartOutlined />}>
+        <Menu.Item key="1" icon={<SettingOutlined />}>
           <Link href="/admin">
-            <a>Dashboard</a>
+            <a className={activeName("/admin")}>Dashboard</a>
           </Link>
         </Menu.Item>
 
         {/* posts */}
-        <SubMenu key="sub1" icon={<MailOutlined />} title="Posts">
-          <Menu.Item key="2">
+        <SubMenu key="2" icon={<PushpinOutlined />} title="Posts">
+          <Menu.Item key="3">
             <Link href="/admin/posts">
-              <a>All Posts</a>
+              <a className={activeName("/admin/posts")}>All Posts</a>
             </Link>
           </Menu.Item>
-          <Menu.Item key="3">
-            <Link href="/admin/posts/new">
-              <a>Add New</a>
+          <Menu.Item key="4">
+            <Link href="/admin/post/new">
+              <a className={activeName("/admin/post/new")}>Add New</a>
             </Link>
           </Menu.Item>
-          <Menu.Item key="3">
+          <Menu.Item key="5">
             <Link href="/admin/categories">
-              <a>Categories</a>
+              <a className={activeName("/admin/categories")}>Categories</a>
             </Link>
           </Menu.Item>
         </SubMenu>
 
         {/* library */}
-        <SubMenu key="sub1" icon={<MailOutlined />} title="Media">
-          <Menu.Item key="5">
+        <SubMenu key="6" icon={<CameraOutlined />} title="Media">
+          <Menu.Item key="7">
             <Link href="/admin/media/library">
-              <a>Library</a>
+              <a className={activeName("/admin/media/library")}>Library</a>
             </Link>
           </Menu.Item>
-          <Menu.Item key="5">
+          <Menu.Item key="8">
             <Link href="/admin/media/new">
-              <a>Add New</a>
+              <a className={activeName("/admin/media/new")}>Add New</a>
             </Link>
           </Menu.Item>
         </SubMenu>
 
         {/* comments */}
-        <Menu.Item key="5">
+        <Menu.Item key="9" icon={<CommentOutlined />}>
           <Link href="/admin/comments">
-            <a>Comments</a>
+            <a className={activeName("/admin/comments")}>Comments</a>
           </Link>
         </Menu.Item>
 
         {/* users */}
-        <SubMenu key="sub1" icon={<MailOutlined />} title="Users">
-          <Menu.Item key="5">
+        <SubMenu key="10" icon={<UserSwitchOutlined />} title="Users">
+          <Menu.Item key="11">
             <Link href="/admin/users">
-              <a>All Users</a>
+              <a className={activeName("/admin/users")}>All Users</a>
             </Link>
           </Menu.Item>
-          <Menu.Item key="5">
+          <Menu.Item key="12">
             <Link href="/admin/users/new">
-              <a>Add New</a>
+              <a className={activeName("/admin/users/new")}>Add New</a>
             </Link>
           </Menu.Item>
         </SubMenu>
 
         {/* profile */}
-        <Menu.Item key="5">
+        <Menu.Item key="13" icon={<UserOutlined />}>
           <Link href="/admin/userid">
-            <a>Profile</a>
+            <a className={activeName("/admin/userid")}>Profile</a>
           </Link>
         </Menu.Item>
 
         {/* Customize */}
-        <Menu.Item key="5">
+        <Menu.Item key="14" icon={<BgColorsOutlined />}>
           <Link href="/admin/customize">
-            <a>Customize</a>
+            <a className={activeName("/admin/customize")}>Customize</a>
           </Link>
         </Menu.Item>
       </Menu>
