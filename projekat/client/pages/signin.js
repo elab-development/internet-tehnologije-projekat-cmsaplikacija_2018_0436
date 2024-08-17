@@ -14,20 +14,27 @@ function Signin() {
   const [loading, setLoading] = useState(false);
   // hooks
   const router = useRouter();
+  // const [form] = Form.useForm();
 
   const onFinish = async (values) => {
     // console.log("values => ", values);
     try {
       setLoading(true);
       const { data } = await axios.post("/signin", values);
-      // console.log("signin response => ", data);
-      // save user and token to context
-      setAuth(data);
-      // save user and token to local storage
-      localStorage.setItem("auth", JSON.stringify(data));
-      toast.success("Successfully signed in");
-      // redirect user
-      router.push("/");
+      if (data?.error) {
+        toast.error(data.error);
+        setLoading(false);
+      } else {
+        // console.log("signin response => ", data);
+        // save user and token to context
+        setAuth(data);
+        // save user and token to local storage
+        localStorage.setItem("auth", JSON.stringify(data));
+        toast.success("Successfully signed in");
+        // redirect user
+        router.push("/");
+        // form.resetFields();
+      }
     } catch (err) {
       console.log("err => ", err);
       setLoading(false);
@@ -41,9 +48,14 @@ function Signin() {
         <h1 style={{ paddingTop: "100px" }}>Signin</h1>
 
         <Form
+          // form={form}
           name="normal_login"
           className="login-form"
-          initialValues={{ remember: true }}
+          initialValues={{
+            remember: true,
+            email: "ryan@gmail.com",
+            password: "rrrrrr",
+          }}
           onFinish={onFinish}
         >
           {/* email */}
