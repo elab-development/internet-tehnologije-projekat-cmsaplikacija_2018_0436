@@ -1,11 +1,16 @@
-import { Button } from "antd";
+import { useContext } from "react";
+import { AuthContext } from "../context/auth";
 
 function Home() {
+  // context
+  const [auth, setAuth] = useContext(AuthContext);
+
   return (
     <div>
       <h1>Home</h1>
-      <Button type="primary">Click me</Button>
+
       <br />
+      <pre>{JSON.stringify(auth, null, 4)}</pre>
     </div>
   );
 }
