@@ -4,6 +4,7 @@ import AdminNav from "../nav/AdminNav";
 import { AuthContext } from "../../context/auth";
 import { useRouter } from "next/router";
 import { LoadingOutlined } from "@ant-design/icons";
+import axios from "axios";
 
 const { Content } = Layout;
 
@@ -16,12 +17,23 @@ function AdminLayout({ children }) {
   const router = useRouter();
 
   useEffect(() => {
-    if (auth?.user?.role !== "Admin") {
-      router.push("/");
-    } else {
+    // if (auth?.user?.role !== "Admin") {
+    //   router.push("/");
+    // } else {
+    //   setLoading(false);
+    // }
+    if (auth?.token) getCurrentAdmin();
+  }, [auth?.token]);
+
+  const getCurrentAdmin = async () => {
+    try {
+      const { data } = await axios.get("/current-admin");
       setLoading(false);
+    } catch (err) {
+      console.log(err);
+      router.push("/");
     }
-  }, [auth]);
+  };
 
   if (loading) {
     return (
