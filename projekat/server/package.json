@@ -12,6 +12,7 @@
   "dependencies": {
     "@sendgrid/mail": "^7.6.0",
     "bcrypt": "^5.0.1",
+    "cloudinary": "^1.29.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "esm": "^3.2.25",
@@ -23,6 +24,7 @@
     "nanoid": "^2.1.11",
     "navigator": "^1.0.1",
     "nodemon": "^3.1.4",
-    "shortid": "^2.2.16"
+    "shortid": "^2.2.16",
+    "slugify": "^1.6.5"
   }
 }
