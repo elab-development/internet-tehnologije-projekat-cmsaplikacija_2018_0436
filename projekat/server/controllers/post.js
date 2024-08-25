@@ -65,6 +65,7 @@ export const createPost = async (req, res) => {
 export const posts = async (req, res) => {
   try {
     const all = await Post.find()
+      .populate("featuredImage")
       .populate("postedBy", "name")
       .populate("categories", "name slug")
       .sort({ createdAt: -1 });
@@ -105,6 +106,19 @@ export const removeMedia = async (req, res) => {
   try {
     const media = await Media.findByIdAndDelete(req.params.id);
     res.json({ ok: true });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const singlePost = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const post = await Post.findOne({ slug })
+      .populate("postedBy", "name")
+      .populate("categories", "name slug")
+      .populate("featuredImage", "url");
+    res.json(post);
   } catch (err) {
     console.log(err);
   }
