@@ -3,7 +3,7 @@
   text-decoration: underline;
 }
 .ProseMirror {
-  height: 500px;
+  min-height: 500px;
   padding: 15px 25px;
   overflow: scroll;
 }

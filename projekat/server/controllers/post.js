@@ -123,3 +123,50 @@ export const singlePost = async (req, res) => {
     console.log(err);
   }
 };
+
+export const removePost = async (req, res) => {
+  try {
+    const post = await Post.findByIdAndDelete(req.params.postId);
+    res.json({ ok: true });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const editPost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const { title, content, featuredImage, categories } = req.body;
+    // get category ids based on category name
+    let ids = [];
+    for (let i = 0; i < categories.length; i++) {
+      Category.findOne({
+        name: categories[i],
+      }).exec((err, data) => {
+        if (err) return console.log(err);
+        ids.push(data._id);
+      });
+    }
+
+    setTimeout(async () => {
+      const post = await Post.findByIdAndUpdate(
+        postId,
+        {
+          title,
+          slug: slugify(title),
+          content,
+          categories: ids,
+          featuredImage,
+        },
+        { new: true }
+      )
+        .populate("postedBy", "name")
+        .populate("categories", "name slug")
+        .populate("featuredImage", "url");
+
+      res.json(post);
+    }, 1000);
+  } catch (err) {
+    console.log(err);
+  }
+};

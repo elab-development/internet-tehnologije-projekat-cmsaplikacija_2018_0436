@@ -13,6 +13,8 @@ import {
   media,
   removeMedia,
   singlePost,
+  removePost,
+  editPost,
 } from "../controllers/post";
 
 router.post("/upload-image", requireSignin, isAdmin, uploadImage);
@@ -26,6 +28,8 @@ router.post(
 router.post("/create-post", requireSignin, isAdmin, createPost);
 router.get("/posts", posts);
 router.get("/post/:slug", singlePost);
+router.delete("/post/:postId", requireSignin, isAdmin, removePost);
+router.put("/edit-post/:postId", requireSignin, isAdmin, editPost);
 // media
 router.get("/media", requireSignin, isAdmin, media);
 router.delete("/media/:id", requireSignin, isAdmin, removeMedia);
