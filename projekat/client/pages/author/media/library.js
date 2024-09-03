@@ -1,8 +1,8 @@
-import { Row, Col } from "antd";
 import AuthorLayout from "../../../components/layout/AuthorLayout";
+import { Row, Col } from "antd";
 import MediaLibrary from "../../../components/media/MediaLibrary";
 
-function AuthorMediaLibrary() {
+const Library = () => {
   return (
     <AuthorLayout>
       <Row>
@@ -12,6 +12,6 @@ function AuthorMediaLibrary() {
       </Row>
     </AuthorLayout>
   );
-}
+};
 
-export default AuthorMediaLibrary;
+export default Library;

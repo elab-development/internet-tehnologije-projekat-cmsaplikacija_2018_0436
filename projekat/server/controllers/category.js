@@ -1,50 +1,67 @@
 import Category from "../models/category";
 import slugify from "slugify";
 
-export const create = async (req, res) => {
+exports.create = async (req, res) => {
+  // console.log("CATEGORY CREATE CONTROLLER", req.body);
   try {
     const { name } = req.body;
     const category = await new Category({
       name,
       slug: slugify(name),
     }).save();
-    // console.log("saved category", category);
     res.json(category);
-  } catch (error) {
+  } catch (err) {
     console.log(err);
+    res.status(400).send("Duplicate error!");
   }
 };
 
-export const categories = async (req, res) => {
+exports.read = async (req, res) => {
   try {
     const categories = await Category.find().sort({ createdAt: -1 });
     res.json(categories);
   } catch (err) {
     console.log(err);
+    res.sendStatus(400);
   }
 };
 
-export const removeCategory = async (req, res) => {
+export const update = async (req, res) => {
   try {
-    const { slug } = req.params;
-    const category = await Category.findOneAndDelete({ slug });
-    res.json(category);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-export const updateCategory = async (req, res) => {
-  try {
-    const { slug } = req.params;
     const { name } = req.body;
     const category = await Category.findOneAndUpdate(
-      { slug },
+      { slug: req.params.slug },
       { name, slug: slugify(name) },
       { new: true }
     );
     res.json(category);
   } catch (err) {
+    res.status(400).send("Update failed");
     console.log(err);
+  }
+};
+
+export const remove = async (req, res) => {
+  try {
+    // console.log(req.params.slug);
+    let category = await Category.findOneAndRemove({
+      slug: req.params.slug,
+    }).exec();
+    res.json(category);
+  } catch (err) {
+    res.status(400).send("Delete failed");
+    console.log(err);
+  }
+};
+
+export const singleCategory = async (req, res) => {
+  try {
+    const category = await Category.findOne({
+      slug: req.params.slug,
+    });
+    res.json(category);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
   }
 };

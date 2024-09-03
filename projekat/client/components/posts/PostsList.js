@@ -1,7 +1,7 @@
 import { List } from "antd";
 import Link from "next/link";
 
-const PostsList = ({ posts, handleDelete, handleEdit }) => {
+const PostsList = ({ posts, handleDelete, page = "admin" }) => {
   return (
     <List
       itemLayout="horizontal"
@@ -9,7 +9,9 @@ const PostsList = ({ posts, handleDelete, handleEdit }) => {
       renderItem={(item) => (
         <List.Item
           actions={[
-            <a onClick={() => handleEdit(item)}>edit</a>,
+            <Link href={`/${page}/posts/${item.slug}`}>
+              <a>edit</a>
+            </Link>,
             <a onClick={() => handleDelete(item)}>delete</a>,
           ]}
         >

@@ -1,40 +1,34 @@
-import { useEffect, useState, useContext } from "react";
-import { Row, Col, Button, List } from "antd";
+import { useState, useEffect, useContext } from "react";
 import AdminLayout from "../../../components/layout/AdminLayout";
-import Link from "next/link";
+import { Row, Col, Button, List, Input } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import Link from "next/link";
 import axios from "axios";
-import { PostContext } from "../../../context/post";
-import { useRouter } from "next/router";
 import PostsList from "../../../components/posts/PostsList";
+import { PostContext } from "../../../context/post";
 
-function Posts() {
+const Posts = () => {
+  // context
   const [post, setPost] = useContext(PostContext);
-  // hook
-  const router = useRouter();
-
   const { posts } = post;
+  // state
+  const [loading, setLoading] = useState(false);
+  const [keyword, setKeyword] = useState("");
+  // console.log(keyword);
 
   useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const { data } = await axios.get("/posts-for-admin");
+        setPost((prev) => ({ ...prev, posts: data }));
+      } catch (err) {
+        console.log(err);
+      }
+    };
     fetchPosts();
   }, []);
 
-  const fetchPosts = async () => {
-    try {
-      const { data } = await axios.get("/posts");
-      setPost((prev) => ({ ...prev, posts: data }));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleEdit = async (post) => {
-    // console.log("EDIT POST", post);
-    return router.push(`/admin/posts/${post.slug}`);
-  };
-
   const handleDelete = async (post) => {
-    // console.log("DELETE POST", post);
     try {
       const answer = window.confirm("Are you sure you want to delete?");
       if (!answer) return;
@@ -47,6 +41,7 @@ function Posts() {
       }
     } catch (err) {
       console.log(err);
+      toast.error("Delete failed. Try again.");
     }
   };
 
@@ -54,23 +49,36 @@ function Posts() {
     <AdminLayout>
       <Row>
         <Col span={24}>
-          <Button type="primary">
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{ margin: "10px 0px 10px 0" }}
+          >
             <Link href="/admin/posts/new">
               <a>
                 <PlusOutlined /> Add New
               </a>
             </Link>
           </Button>
-          <h1 style={{ marginTop: 15 }}>{posts?.length} Posts</h1>
+          <h1>{posts?.length} Posts</h1>
+
+          <Input
+            placeholder="Search"
+            type="search"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value.toLowerCase())}
+          />
+
           <PostsList
-            posts={posts}
-            handleEdit={handleEdit}
+            posts={posts.filter((post) =>
+              post.title.toLowerCase().includes(keyword)
+            )}
             handleDelete={handleDelete}
           />
         </Col>
       </Row>
     </AdminLayout>
   );
-}
+};
 
 export default Posts;

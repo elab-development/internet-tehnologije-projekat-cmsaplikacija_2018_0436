@@ -1,60 +1,74 @@
-import { useContext, useState, useEffect } from "react";
-import { Layout, Row, Col, Input, Select, Modal, Button, Image } from "antd";
+import { useState, useEffect, useContext } from "react";
+import { Row, Col, Button, Modal, Input, Upload, Image } from "antd";
 import Editor from "rich-markdown-editor";
 import { ThemeContext } from "../../context/theme";
 import axios from "axios";
-import { uploadImage } from "../../functions/upload";
-import { toast } from "react-hot-toast";
+import { Select, Typography } from "antd";
+import { Loading3QuartersOutlined, UploadOutlined } from "@ant-design/icons";
+import toast from "react-hot-toast";
 import { useRouter } from "next/router";
-import { UploadOutlined } from "@ant-design/icons";
-import Media from "../media";
+import Media from "../media/Media";
 import { MediaContext } from "../../context/media";
+import { uploadImage } from "../../functions/upload";
+
+const { Text } = Typography;
 
 const { Option } = Select;
-const { Content, Sider } = Layout;
-
-function NewPostComponent({ page = "admin" }) {
-  // load from local storage
+const NewPostComponent = ({ page = "admin" }) => {
+  console.log("NewPostComponent ============>", page);
+  // from localstorage
   const savedTitle = () => {
     if (process.browser) {
-      if (localStorage.getItem("post-title")) {
+      if (localStorage.getItem("post-title"))
         return JSON.parse(localStorage.getItem("post-title"));
-      }
     }
   };
+
   const savedContent = () => {
     if (process.browser) {
-      if (localStorage.getItem("post-content")) {
+      if (localStorage.getItem("post-content"))
         return JSON.parse(localStorage.getItem("post-content"));
-      }
     }
   };
-  // context
+  // hooks
   const [theme, setTheme] = useContext(ThemeContext);
   const [media, setMedia] = useContext(MediaContext);
+  const router = useRouter();
   // state
   const [title, setTitle] = useState(savedTitle());
   const [content, setContent] = useState(savedContent());
-  const [categories, setCategories] = useState([]);
-  const [loadedCategories, setLoadedCategories] = useState([]);
+  const [categories, setCatgories] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
-  // media Modal
   // const [visibleMedia, setVisibleMedia] = useState(false);
-  // hook
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const [loadedCatetories, setLoadedCatetories] = useState([]);
+
+  // console.log("TITLE", title);
+  // console.log("CONTENT", content);
 
   useEffect(() => {
+    const loadCategories = async () => {
+      const { data } = await axios.get("/categories");
+      setLoadedCatetories(data);
+    };
     loadCategories();
   }, []);
 
-  const loadCategories = async () => {
-    try {
-      const { data } = await axios.get("/categories");
-      setLoadedCategories(data);
-    } catch (err) {
-      console.log(err);
-    }
+  const handleTitle = (e) => {
+    setTitle(e.target.value);
+    localStorage.setItem("post-title", JSON.stringify(e.target.value));
+  };
+
+  const handleContent = (value) => {
+    setContent(value);
+    localStorage.setItem("post-content", JSON.stringify(value));
+    setTyping(true);
+    setTimeout(() => {
+      {
+        setTyping(false);
+      }
+    }, 1000);
   };
 
   const handlePublish = async () => {
@@ -66,14 +80,14 @@ function NewPostComponent({ page = "admin" }) {
         categories,
         featuredImage: media?.selected?._id,
       });
+      // console.log("POST CREATED => ", data);
       if (data?.error) {
-        toast.error(data?.error);
+        toast.error(data.error);
         setLoading(false);
       } else {
-        // console.log("POST PUBLISHED RES => ", data);
         toast.success("Post created successfully");
-        localStorage.removeItem("post-title");
-        localStorage.removeItem("post-content");
+        localStorage.setItem("post-title", "");
+        localStorage.setItem("post-content", "");
         setMedia({ ...media, selected: null });
         router.push(`/${page}/posts`);
       }
@@ -86,111 +100,127 @@ function NewPostComponent({ page = "admin" }) {
 
   return (
     <Row>
-      <Col span={14} offset={1}>
-        <h1>Create new post</h1>
+      <Col sm={22} lg={14} offset={1}>
+        <h4 style={{ marginBottom: "-10px" }}>Create Post</h4>
+        {/* <pre>{JSON.stringify(media, null, 4)}</pre> */}
         <Input
+          style={{ margin: "20px 0px 20px 0px" }}
           size="large"
+          placeholder="Give it a title"
           value={title}
-          placeholder="Give your post a title"
-          onChange={(e) => {
-            setTitle(e.target.value);
-            localStorage.setItem("post-title", JSON.stringify(e.target.value));
-          }}
+          onChange={handleTitle}
         />
-        <br />
-        <br />
-        <div className="editor-scroll">
+
+        <div
+          className="editor-scroll"
+          style={{ height: "500px", overflow: "scroll" }}
+        >
           <Editor
+            style={{ width: "100%" }}
             dark={theme === "light" ? false : true}
+            placeholder="Write something..."
             defaultValue={content}
-            onChange={(v) => {
-              setContent(v());
-              localStorage.setItem("post-content", JSON.stringify(v()));
-            }}
+            // defaultValue="Write something..."
             uploadImage={uploadImage}
+            onChange={(v) => handleContent(v())}
           />
         </div>
-
-        <br />
-        <br />
-
-        {/* <pre>{JSON.stringify(loadedCategories, null, 4)}</pre> */}
       </Col>
-
-      <Col span={6} offset={1}>
+      <Col sm={22} lg={6} offset={1}>
         <Button
-          style={{ margin: "10px 0px 10px 0px", width: "100%" }}
+          type="default"
+          htmlType="submit"
+          style={{ margin: "10px 0px 10px 0" }}
           onClick={() => setVisible(true)}
         >
           Preview
         </Button>
 
-        <Button
-          style={{ margin: "10px 0px 10px 0px", width: "100%" }}
-          onClick={() => setMedia({ ...media, showMediaModal: true })}
-        >
-          <UploadOutlined /> Featured Image
-        </Button>
+        {typing && (
+          <>
+            <Loading3QuartersOutlined spin style={{ marginLeft: 20 }} />{" "}
+            <Text disabled>Saving draft...</Text>
+          </>
+        )}
 
         <h4>Categories</h4>
-
         <Select
           mode="multiple"
-          allowClear={true}
-          placeholder="Select categories"
+          allowClear
           style={{ width: "100%" }}
-          onChange={(v) => setCategories(v)}
+          placeholder="Please select"
+          onChange={(v) => setCatgories(v)}
         >
-          {loadedCategories.map((item) => (
+          {loadedCatetories.map((item) => (
             <Option key={item.name}>{item.name}</Option>
           ))}
         </Select>
 
-        {media?.selected && (
-          <div style={{ marginTop: "15px" }}>
-            <Image width="100%" src={media?.selected?.url} />
-          </div>
+        {/* show selected/featured image */}
+        {media.selected && (
+          <>
+            <div style={{ marginBottom: 15 }}></div>
+
+            <Image width="100%" src={media.selected.url} />
+          </>
         )}
 
+        {/* <Upload onChange={handleFileChange} multiple={false} maxCount={1}> */}
         <Button
-          loading={loading}
-          style={{ margin: "10px 0px 10px 0px", width: "100%" }}
-          type="primary"
+          // onClick={() => setVisibleMedia(true)}
+          onClick={() => setMedia({ ...media, showMediaModal: true })}
+          style={{ marginTop: 10 }}
+          icon={<UploadOutlined />}
+          block
+        >
+          Featured Image
+        </Button>
+        {/* </Upload> */}
+
+        <Button
           onClick={handlePublish}
+          type="default"
+          htmlType="submit"
+          style={{ margin: "10px 0px 10px 0" }}
+          loading={loading}
+          block
         >
           Publish
         </Button>
+        {/* for post preview */}
+        <Modal
+          title="Preview"
+          centered
+          visible={visible}
+          onOk={() => setVisible(false)}
+          onCancel={() => setVisible(false)}
+          width={720}
+          footer={null}
+        >
+          <h1>{title}</h1>
+          <img style={{ width: "100%" }} src={media.selected?.url} />
+          <Editor
+            dark={theme === "light" ? false : true}
+            value={content}
+            readOnly={true}
+          />
+        </Modal>
+        {/* for media management */}
+        <Modal
+          title="Media"
+          // centered
+          style={{ top: 20 }}
+          visible={media.showMediaModal}
+          onOk={() => setMedia({ ...media, showMediaModal: false })}
+          onCancel={() => setMedia({ ...media, showMediaModal: false })}
+          width={720}
+          footer={null}
+        >
+          <Media />
+        </Modal>
       </Col>
-      {/* preview modal */}
-      <Modal
-        title="Preview"
-        centered
-        visible={visible}
-        onOk={() => setVisible(false)}
-        onCancel={() => setVisible(false)}
-        width={720}
-        footer={null}
-      >
-        <h1>{title}</h1>
-        <Editor
-          dark={theme === "light" ? false : true}
-          defaultValue={content}
-          readOnly={true}
-        />
-      </Modal>
-      {/* media modal */}
-      <Modal
-        visible={media.showMediaModal}
-        title="Media"
-        onOk={() => setMedia({ ...media, showMediaModal: false })}
-        onCancel={() => setMedia({ ...media, showMediaModal: false })}
-        width={720}
-        footer={null}
-      >
-        <Media />
-      </Modal>
     </Row>
   );
-}
+};
 
 export default NewPostComponent;

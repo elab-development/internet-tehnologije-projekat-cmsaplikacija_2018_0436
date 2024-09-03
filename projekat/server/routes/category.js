@@ -1,19 +1,21 @@
-import express from "express";
+const express = require("express");
+
 const router = express.Router();
 
-// middleware
-import { requireSignin, isAdmin } from "../middlewares";
 // controllers
-import {
+const {
   create,
-  categories,
-  removeCategory,
-  updateCategory,
-} from "../controllers/category";
+  read,
+  update,
+  remove,
+  singleCategory,
+} = require("../controllers/category");
+import { requireSignin, isAdmin } from "../middlewares";
 
 router.post("/category", requireSignin, isAdmin, create);
-router.get("/categories", categories);
-router.delete("/category/:slug", requireSignin, isAdmin, removeCategory);
-router.put("/category/:slug", requireSignin, isAdmin, updateCategory);
+router.get("/categories", read);
+router.put("/category/:slug", requireSignin, isAdmin, update);
+router.delete("/category/:slug", requireSignin, isAdmin, remove);
+router.get("/category/:slug", singleCategory);
 
-export default router;
+module.exports = router;

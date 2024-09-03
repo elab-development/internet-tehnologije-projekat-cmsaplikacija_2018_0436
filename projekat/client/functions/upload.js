@@ -1,5 +1,5 @@
-import Resizer from "react-image-file-resizer";
 import axios from "axios";
+import Resizer from "react-image-file-resizer";
 
 const resizeFile = (file) =>
   new Promise((resolve) => {
@@ -18,13 +18,12 @@ const resizeFile = (file) =>
   });
 
 export const uploadImage = async (file) => {
-  // console.log(file);
+  console.log("file", file);
   try {
     const image = await resizeFile(file);
-    // console.log("IMAGE BASE64 => ", image);
     const { data } = await axios.post("/upload-image", { image });
-    // console.log("UPLOAD FILE RESPONSE => ", data);
-    return data;
+    // console.log("UPLOAD FILE RESULT => ", data);
+    return data.url;
   } catch (err) {
     console.log(err);
   }

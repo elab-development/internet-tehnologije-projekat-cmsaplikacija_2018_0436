@@ -1,12 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import AdminLayout from "../../../components/layout/AdminLayout";
-import { Row, Col, Button, Input, Checkbox, Select } from "antd";
+import { Row, Col, Button, Modal, Input, Upload, Image, Checkbox } from "antd";
+import { ThemeContext } from "../../../context/theme";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { Select, Typography } from "antd";
+import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import generator from "generate-password";
 
+const { Option } = Select;
+
 const NewUser = () => {
+  // hooks
+
+  const router = useRouter();
   // state
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,21 +23,20 @@ const NewUser = () => {
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // function
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handlePublish = async () => {
     try {
       setLoading(true);
-      // console.table({ name, email, website, password, role, checked });
       const { data } = await axios.post("/create-user", {
-        email,
         name,
+        email,
         website,
         password,
+        website,
         role,
         checked,
       });
-      if (data.error) {
+      console.log("USER CREATED => ", data);
+      if (data?.error) {
         toast.error(data.error);
         setLoading(false);
       } else {
@@ -39,12 +45,11 @@ const NewUser = () => {
       }
     } catch (err) {
       console.log(err);
-      toast.error("Signup failed. Try again.");
+      toast.error("User create failed. Try again.");
       setLoading(false);
     }
   };
 
-  // show form
   return (
     <AdminLayout>
       <Row>
@@ -71,14 +76,15 @@ const NewUser = () => {
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
           />
+
           <div style={{ display: "flex" }}>
             <Button
               onClick={() => setPassword(generator.generate({ length: 6 }))}
               type="default"
               size="large"
-              style={{ margin: "10px 0px 10px 0px" }}
+              style={{ margin: "10px 0px 10px 0" }}
             >
-              Generate password
+              Generate Password
             </Button>
             <Input.Password
               style={{ margin: "10px 0px 10px 0px" }}
@@ -91,12 +97,12 @@ const NewUser = () => {
 
           <Select
             defaultValue="Subscriber"
-            style={{ margin: "10px 0px 10px 0px", width: "100%" }}
-            onChange={(e) => setRole(e)}
+            style={{ width: "100%", margin: "10px 0px 10px 0px" }}
+            onChange={(v) => setRole(v)}
           >
-            <Select.Option value="Subscriber">Subscriber</Select.Option>
-            <Select.Option value="Author">Author</Select.Option>
-            <Select.Option value="Admin">Admin</Select.Option>
+            <Option value="Subscriber">Subscriber</Option>
+            <Option value="Author">Author</Option>
+            <Option value="Admin">Admin</Option>
           </Select>
 
           <Checkbox
@@ -107,9 +113,10 @@ const NewUser = () => {
           </Checkbox>
 
           <Button
-            onClick={handleSubmit}
+            onClick={handlePublish}
             type="default"
-            style={{ margin: "10px 0px 10px 0px" }}
+            htmlType="submit"
+            style={{ margin: "10px 0px 10px 0" }}
             loading={loading}
             block
           >

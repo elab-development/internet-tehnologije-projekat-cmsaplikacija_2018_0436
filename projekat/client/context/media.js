@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, createContext } from "react";
 
 const MediaContext = createContext();

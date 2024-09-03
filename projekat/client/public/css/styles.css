@@ -1,22 +1,40 @@
+* {
+  font-family: "Rubik", sans-serif;
+  letter-spacing: 0.03em;
+}
+/* markdown editor text padding */
+.sc-dJjYzT {
+  padding: 30px;
+  font-size: 1.2px;
+}
+/* featured image upload on post create */
+.ant-upload {
+  width: 100%;
+}
+/* uploaded file list > hide delete icons */
+.ant-upload-list-item-card-actions {
+  display: none;
+}
+/* drag and drop files buton height */
+.ant-upload-drag {
+  height: 150px !important;
+}
+/* admin menu active */
 .active {
   color: #1890ff !important;
   text-decoration: underline;
 }
-.ProseMirror {
-  min-height: 500px;
-  padding: 15px 25px;
-  overflow: scroll;
-}
-.editor-scroll ::-webkit-scrollbar {
+/* hide scrollbar */
+.editor-scroll::-webkit-scrollbar {
   display: none;
 }
+/* Hide scrollbar for IE, Edge and Firefox */
 .editor-scroll {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
-.ant-upload-list-item-card-actions {
-  display: none;
-}
-.ant-upload-drag {
-  height: 150px !important;
+/* progress bar text */
+.ant-progress-text {
+  font-size: 24px !important;
+  color: #999 !important;
 }

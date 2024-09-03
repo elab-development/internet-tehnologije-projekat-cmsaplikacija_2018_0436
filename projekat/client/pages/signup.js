@@ -1,45 +1,44 @@
-import { useState, useContext, useEffect } from "react";
-import { Form, Input, Button, Checkbox, Col, Row } from "antd";
-import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
-import Link from "next/link";
-import axios from "axios";
+import { useState, useEffect, useContext } from "react";
+import { Form, Input, Button, Checkbox } from "antd";
+import { MailOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Row, Col, Typography } from "antd";
 import toast from "react-hot-toast";
 import { AuthContext } from "../context/auth";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import axios from "axios";
 
-function Signup() {
+const { Title } = Typography;
+
+const SignUp = () => {
   // context
   const [auth, setAuth] = useContext(AuthContext);
-  // hook
+  // hooks
   const router = useRouter();
-  console.log(router);
   // state
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (auth?.token) {
-      router.push("/");
-    }
-  }, [auth]);
-
   const onFinish = async (values) => {
-    // console.log("values => ", values);
-    setLoading(true);
+    // console.log("Success:", values);
     try {
+      setLoading(true);
       const { data } = await axios.post(`/signup`, values);
-      if (data?.error) {
+      console.log(data);
+      if (data.error) {
         toast.error(data.error);
         setLoading(false);
       } else {
-        // console.log("signup response => ", data);
-        // save in context
-        setAuth(data);
-        // save in local storage
+        // save user and token response in context, localstorage then redirect user to dashboard
+        setAuth({ user: data.user, token: data.token });
         localStorage.setItem("auth", JSON.stringify(data));
-        toast.success("Successfully signed up");
+        toast.success("Successfully registered");
         setLoading(false);
-        // redirect
-        router.push("/admin");
+        // router.push("/");
+        if (data?.user?.role === "Admin") {
+          router.push("/admin");
+        } else {
+          router.push("/");
+        }
       }
     } catch (err) {
       toast.error("Signup failed. Try again.");
@@ -50,63 +49,100 @@ function Signup() {
 
   return (
     <Row>
-      <Col span={8} offset={8}>
-        <h1 style={{ paddingTop: "100px" }}>Signup</h1>
+      <Col span={12} offset={6} style={{ paddingTop: "10%" }}>
+        <Title>Sign Up</Title>
 
-        <Form
-          name="normal_login"
-          className="login-form"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-        >
-          {/* name */}
+        <Form onFinish={onFinish}>
           <Form.Item
             name="name"
-            rules={[{ required: true, message: "Please input your name!" }]}
+            rules={[
+              {
+                required: true,
+                message: "Please enter your name!",
+              },
+            ]}
+            hasFeedback
           >
-            <Input
-              prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Name"
-            />
+            <Input prefix={<UserOutlined />} placeholder="Name" />
           </Form.Item>
-          {/* email */}
-          <Form.Item name="email" rules={[{ type: "email" }]}>
-            <Input
-              prefix={<MailOutlined className="site-form-item-icon" />}
-              placeholder="Email"
-            />
+          <Form.Item
+            name="email"
+            rules={[
+              {
+                type: "email",
+                message: "The input is not valid E-mail!",
+              },
+              {
+                required: true,
+                message: "Please input your E-mail!",
+              },
+            ]}
+            hasFeedback
+          >
+            <Input prefix={<MailOutlined />} placeholder="Email" />
           </Form.Item>
-          {/* password */}
           <Form.Item
             name="password"
-            rules={[{ required: true, message: "Please input your Password!" }]}
+            rules={[
+              {
+                required: true,
+                message: "Please input your password!",
+                min: 6,
+                max: 24,
+              },
+            ]}
+            hasFeedback
           >
             <Input.Password
-              prefix={<LockOutlined className="site-form-item-icon" />}
+              prefix={<LockOutlined />}
               type="password"
               placeholder="Password"
             />
           </Form.Item>
 
+          <Form.Item
+            name="confirm"
+            dependencies={["password"]}
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Please confirm your password!",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+
+                  return Promise.reject(
+                    new Error(
+                      "The two passwords that you entered do not match!"
+                    )
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input.Password
+              prefix={<LockOutlined />}
+              placeholder="Confirm Password"
+            />
+          </Form.Item>
+
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-form-button"
-              loading={loading}
-            >
-              Register
+            <Button type="primary" htmlType="submit" loading={loading}>
+              Sign Up
             </Button>
-            <br />
-            Or{" "}
+            <br /> Or{" "}
             <Link href="/signin">
-              <a>Login now!</a>
+              <a>Login!</a>
             </Link>
           </Form.Item>
         </Form>
       </Col>
     </Row>
   );
-}
+};
 
-export default Signup;
+export default SignUp;
