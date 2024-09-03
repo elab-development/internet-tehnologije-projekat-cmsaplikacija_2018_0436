@@ -1,63 +1,61 @@
-import { useContext, useEffect, useState } from "react";
 import { Layout } from "antd";
-import SubscriberNav from "../nav/SubscriberNav";
-import { AuthContext } from "../../context/auth";
+import SubscriberNav from "../../components/nav/SubscriberNav";
+import { useState, useEffect, useContext } from "react";
+import { SyncOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
-import { LoadingOutlined } from "@ant-design/icons";
+import { AuthContext } from "../../context/auth";
 import axios from "axios";
+import LoadingToRedirect from "./LoadingToRedirect";
 
 const { Content } = Layout;
 
-function SubscriberLayout({ children }) {
+const SubscriberLayout = ({ children }) => {
   // context
   const [auth, setAuth] = useContext(AuthContext);
-  // state
-  const [loading, setLoading] = useState(true);
   // hooks
   const router = useRouter();
 
+  // state
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    // if (auth?.user?.role !== "Admin") {
-    //   router.push("/");
-    // } else {
-    //   setLoading(false);
-    // }
-    if (auth?.token) getCurrentAuthor();
+    if (auth?.token) {
+      getCurrentSubscriber();
+    }
   }, [auth?.token]);
 
-  const getCurrentAuthor = async () => {
+  const getCurrentSubscriber = async () => {
     try {
-      const { data } = await axios.get("/current-subscriber");
-      setLoading(false);
+      const { data } = await axios.get(`/current-subscriber`);
+      if (data.ok) {
+        setLoading(false);
+      }
     } catch (err) {
-      console.log(err);
       router.push("/");
     }
   };
 
-  if (loading) {
-    return (
-      <LoadingOutlined
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          fontSize: "50px",
-          color: "red",
-        }}
-      />
-    );
-  }
-
-  return (
+  return loading ? (
+    <LoadingToRedirect />
+  ) : (
     <Layout>
       <SubscriberNav />
+
       <Layout>
-        <Content style={{ padding: "10px" }}>{children}</Content>
+        <Content
+          style={{
+            margin: "16px 16px",
+            overflow: "auto",
+            height: "100vh",
+            // position: "fixed",
+            marginTop: 54,
+          }}
+        >
+          {children}
+        </Content>
       </Layout>
     </Layout>
   );
-}
+};
 
 export default SubscriberLayout;

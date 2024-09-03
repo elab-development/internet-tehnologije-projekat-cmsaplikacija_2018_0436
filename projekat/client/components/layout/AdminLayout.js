@@ -1,63 +1,72 @@
-import { useContext, useEffect, useState } from "react";
 import { Layout } from "antd";
-import AdminNav from "../nav/AdminNav";
-import { AuthContext } from "../../context/auth";
+import AdminNav from "../../components/nav/AdminNav";
+import { useState, useEffect, useContext } from "react";
+import { SyncOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
-import { LoadingOutlined } from "@ant-design/icons";
+import { AuthContext } from "../../context/auth";
 import axios from "axios";
+import LoadingToRedirect from "./LoadingToRedirect";
 
 const { Content } = Layout;
 
-function AdminLayout({ children }) {
+const AdminLayout = ({ children }) => {
   // context
   const [auth, setAuth] = useContext(AuthContext);
-  // state
-  const [loading, setLoading] = useState(true);
   // hooks
   const router = useRouter();
 
+  // state
+  const [loading, setLoading] = useState(true);
+  const [count, setCount] = useState(3);
+
   useEffect(() => {
-    // if (auth?.user?.role !== "Admin") {
-    //   router.push("/");
-    // } else {
-    //   setLoading(false);
-    // }
-    if (auth?.token) getCurrentAdmin();
+    if (auth?.token) {
+      getCurrentAdmin();
+    }
   }, [auth?.token]);
 
   const getCurrentAdmin = async () => {
     try {
-      const { data } = await axios.get("/current-admin");
-      setLoading(false);
+      const { data } = await axios.get(`/current-admin`);
+      console.log("current admin", data);
+      if (data.ok) {
+        setLoading(false);
+      }
     } catch (err) {
-      console.log(err);
       router.push("/");
     }
   };
 
-  if (loading) {
-    return (
-      <LoadingOutlined
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          fontSize: "50px",
-          color: "red",
-        }}
-      />
-    );
-  }
-
-  return (
+  return loading ? (
+    <LoadingToRedirect />
+  ) : (
+    // <SyncOutlined
+    //   spin
+    //   style={{
+    //     padding: 200,
+    //     display: "flex",
+    //     justifyContent: "center",
+    //     fontSize: "50px",
+    //   }}
+    // />
     <Layout>
       <AdminNav />
+
       <Layout>
-        <Content style={{ padding: "10px" }}>{children}</Content>
+        <Content
+          style={{
+            margin: "16px 16px",
+            overflow: "auto",
+            height: "100vh",
+            // position: "fixed",
+            marginTop: 54,
+          }}
+        >
+          {children}
+        </Content>
       </Layout>
     </Layout>
   );
-}
+};
 
 export default AdminLayout;
