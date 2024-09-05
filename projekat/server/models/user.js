@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+const { ObjectId } = mongoose.Schema;
+
 const userSchema = new Schema(
   {
     name: {
@@ -24,11 +26,14 @@ const userSchema = new Schema(
       type: String,
       default: "Subscriber",
     },
-    image: {
-      public_id: "",
-      url: "",
+    website: {
+      type: String,
+      trim: true,
+      max: 32,
     },
+    image: { type: ObjectId, ref: "Media" },
     resetCode: "",
+    posts: [{ type: ObjectId, ref: "Post" }],
   },
   { timestamps: true }
 );

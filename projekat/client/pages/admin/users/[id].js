@@ -1,13 +1,13 @@
+import AdminLayout from "../../components/layout/AdminLayout";
 import { useState, useEffect, useContext } from "react";
-import AdminLayout from "../../../components/layout/AdminLayout";
 import { Row, Col, List, Avatar } from "antd";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { AuthContext } from "../../../context/auth";
+import { AuthContext } from "../../context/auth";
 import { useRouter } from "next/router";
-import ProfileUpdate from "../../../components/user/ProfileUpdate";
+import ProfileUpdate from "../../components/user/ProfileUpdate";
 
-const UserEdit = () => {
+const AdminProfile = () => {
   // context
   const [auth, setAuth] = useContext(AuthContext);
   // hooks
@@ -34,4 +34,4 @@ const UserEdit = () => {
   );
 };
 
-export default UserEdit;
+export default AdminProfile;
