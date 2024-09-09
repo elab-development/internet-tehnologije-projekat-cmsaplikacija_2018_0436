@@ -1,42 +1,35 @@
-import { useContext } from "react";
-import { Row, Col } from "antd";
 import ParallaxImage from "./ParallaxImage";
+import { Row, Col } from "antd";
 import {
   UsergroupAddOutlined,
   ApiOutlined,
   CopyrightOutlined,
 } from "@ant-design/icons";
-import { ThemeContext } from "../../context/theme";
 
-const Footer = () => {
-  const [theme, setTheme] = useContext(ThemeContext);
+const Footer = () => (
+  <div>
+    <ParallaxImage url="/images/image3.jpeg">
+      <Row>
+        <Col span={8} style={{ textAlign: "center" }}>
+          <UsergroupAddOutlined style={{ fontSize: 80 }} />
+          <br />
+          The ultimate blogging platform
+        </Col>
 
-  return (
-    <div
-      style={{ borderTop: `5px solid ${theme === "light" ? "#000" : "#fff"}` }}
-    >
-      <ParallaxImage url="/images/bg6.jpeg">
-        <Row>
-          <Col style={{ textAlign: "center", color: "#000" }} span={8}>
-            <UsergroupAddOutlined style={{ fontSize: 80 }} />
-            <br />
-            The Ultimate Blogging Platform
-          </Col>
-          <Col style={{ textAlign: "center", color: "#000" }} span={8}>
-            <ApiOutlined style={{ fontSize: 80 }} />
-            <br />
-            Built using MERN Stack (MongonDB, Express, React, Node)
-          </Col>
-          <Col style={{ textAlign: "center", color: "#000" }} span={8}>
-            <CopyrightOutlined style={{ fontSize: 80 }} />
-            <br />
-            Copyright {new Date().getFullYear()} &copy; All rights reserved
-          </Col>
-        </Row>
-        <br />
-      </ParallaxImage>
-    </div>
-  );
-};
+        <Col span={8} style={{ textAlign: "center" }}>
+          <ApiOutlined style={{ fontSize: 80 }} />
+          <br />
+          Built using MERN stack (MongoDB Express React Node)
+        </Col>
 
+        <Col span={8} style={{ textAlign: "center" }}>
+          <CopyrightOutlined style={{ fontSize: 80 }} />
+          <br />
+          Copyright {new Date().getFullYear()} &copy; All rights reserved
+        </Col>
+      </Row>
+      <br />
+    </ParallaxImage>
+  </div>
+);
 export default Footer;

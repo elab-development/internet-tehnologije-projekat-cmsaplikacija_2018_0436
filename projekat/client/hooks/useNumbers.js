@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 import axios from "axios";
 
 const useNumbers = () => {
@@ -13,14 +12,15 @@ const useNumbers = () => {
   const getNumbers = async () => {
     try {
       const { data } = await axios.get("/numbers");
-      console.log(data);
       setNumbers(data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  return { numbers };
+  return {
+    numbers,
+  };
 };
 
 export default useNumbers;

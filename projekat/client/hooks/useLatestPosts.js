@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const usePost = () => {
+const useLatestPosts = () => {
   // state
   const [latestPosts, setLatestPosts] = useState([]);
 
@@ -14,7 +14,7 @@ const usePost = () => {
         console.log(err);
       }
     };
-    // execute
+
     getPosts();
   }, []);
 
@@ -23,4 +23,4 @@ const usePost = () => {
   };
 };
 
-export default usePost;
+export default useLatestPosts;

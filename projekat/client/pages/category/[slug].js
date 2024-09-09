@@ -5,7 +5,7 @@ import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import useCategory from "../../hooks/useCategory";
-import usePost from "../../hooks/usePost";
+import usePost from "../../hooks/useLatestPosts";
 
 const { Title } = Typography;
 dayjs.extend(relativeTime);

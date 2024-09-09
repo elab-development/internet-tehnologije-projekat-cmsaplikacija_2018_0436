@@ -1,22 +1,20 @@
-import { useContext } from "react";
-import { Tabs } from "antd";
+import React from "react";
 import UploadFile from "./UploadFile";
 import MediaLibrary from "./MediaLibrary";
+import { Tabs } from "antd";
 
 const { TabPane } = Tabs;
 
-const Media = () => {
+const Media = ({ page }) => {
   return (
-    <>
-      <Tabs type="card">
-        <TabPane tab="Upload Files" key="1">
-          <UploadFile />
-        </TabPane>
-        <TabPane tab="Media Library" key="2">
-          <MediaLibrary />
-        </TabPane>
-      </Tabs>
-    </>
+    <Tabs>
+      <TabPane tab="Upload File" key="1">
+        <UploadFile />
+      </TabPane>
+      <TabPane tab="Media Library" key="2">
+        <MediaLibrary />
+      </TabPane>
+    </Tabs>
   );
 };
 

@@ -21,7 +21,7 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../../context/auth";
 import { ShareSocial } from "react-share-social";
 import useCategory from "../../hooks/useCategory";
-import usePost from "../../hooks/usePost";
+import usePost from "../../hooks/useLatestPosts";
 
 const { Meta } = Card;
 const { Title } = Typography;

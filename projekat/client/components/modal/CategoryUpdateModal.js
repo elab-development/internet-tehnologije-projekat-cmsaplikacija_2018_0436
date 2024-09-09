@@ -1,57 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Button, Form, Input } from "antd";
+import { Modal, Form, Input, Button } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 
-const UpdateCategoryModal = ({
+const CategoryUpdateModal = ({
   visible,
   setVisible,
   handleUpdate,
-  loading,
   updatingCategory,
 }) => {
-  const [form] = Form.useForm();
-  // Ant design form input default values and clear values
   return (
-    <>
-      <Modal
-        title="Update Category"
-        visible={visible}
-        form={form}
-        onOk={() => setVisible(false)}
-        onCancel={() => setVisible(false)}
-        footer={null}
+    <Modal
+      title="Update category"
+      visible={visible}
+      footer={null}
+      onCancel={() => setVisible(false)}
+    >
+      <Form
+        onFinish={handleUpdate}
+        fields={[{ name: ["name"], value: updatingCategory.name }]}
       >
-        <Form
-          onFinish={handleUpdate}
-          fields={[
-            {
-              name: ["name"],
-              value: updatingCategory.name,
-            },
-          ]}
-        >
-          <Form.Item
-            name="name"
-            rules={[
-              {
-                required: true,
-                message: "Name is required",
-              },
-            ]}
-            hasFeedback
-          >
-            <Input prefix={<EditOutlined />} placeholder="Name" />
-          </Form.Item>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit" loading={loading}>
-              Update
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
-    </>
+        <Form.Item name="name">
+          <Input
+            prefix={<EditOutlined className="site-form-item-icon" />}
+            placeholder="Give it a name"
+          />
+        </Form.Item>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form>
+    </Modal>
   );
 };
 
-export default UpdateCategoryModal;
+export default CategoryUpdateModal;

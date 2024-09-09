@@ -1,27 +1,23 @@
 const ParallaxImage = ({
-  url = "/images/bg5.jpeg",
+  url = "/images/image2.jpeg",
   children,
-  paddingtop = "100px",
+  paddingTop = "100px",
   paddingBottom = "75px",
-}) => {
-  // console.log(url);
-  return (
-    <div
-      className="container-fluid text-center parallaxImage"
-      style={{
-        backgroundImage: "url(" + url + ")",
-        backgroundAttachment: "fixed",
-        paddingTop: paddingtop,
-        paddingBottom: paddingBottom,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "top center",
-        display: "block",
-      }}
-    >
-      <div>{children}</div>
-    </div>
-  );
-};
+}) => (
+  <div
+    style={{
+      backgroundImage: `url(${url})`,
+      backgroundPosition: "center center",
+      backgroundAttachment: "fixed",
+      paddingTop: paddingTop,
+      paddingBottom: paddingBottom,
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+      display: "block",
+    }}
+  >
+    {children}
+  </div>
+);
 
 export default ParallaxImage;

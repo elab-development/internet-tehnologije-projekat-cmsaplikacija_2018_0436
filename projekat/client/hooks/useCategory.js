@@ -14,7 +14,7 @@ const useCategory = () => {
         console.log(err);
       }
     };
-    // execute
+
     getCategories();
   }, []);
 

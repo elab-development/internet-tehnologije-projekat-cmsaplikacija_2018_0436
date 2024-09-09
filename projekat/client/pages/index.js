@@ -5,7 +5,7 @@ import FullWidthImage from "../components/pages/FullWidthImage";
 import RenderProgress from "../components/pages/RenderProgress";
 import useNumbers from "../hooks/useNumbers";
 import ParallaxImage from "../components/pages/ParallaxImage";
-import usePost from "../hooks/usePost";
+import usePost from "../hooks/useLatestPosts";
 import useCategory from "../hooks/useCategory";
 import Link from "next/link";
 import { ThunderboltOutlined } from "@ant-design/icons";

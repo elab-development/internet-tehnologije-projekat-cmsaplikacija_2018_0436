@@ -15,7 +15,7 @@ const RenderProgress = ({ number, name, link = "#" }) => (
         percent={100}
         format={() => <CountTo to={number} speed={number * 100} />}
       />
-      <p style={{ marginTop: 18, color: "#666" }}> {name.toUpperCase()}</p>
+      <p style={{ marginTop: 18, color: "#666" }}>{name.toUpperCase()}</p>
     </a>
   </Link>
 );

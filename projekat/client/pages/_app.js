@@ -2,7 +2,7 @@ import { ThemeProvider } from "../context/theme";
 import { AuthProvider } from "../context/auth";
 import { PostProvider } from "../context/post";
 import { MediaProvider } from "../context/media";
-import TopNav from "../components/nav/TopNav";
+import TopNav from "../components/TopNav";
 import Head from "next/head";
 import { Toaster } from "react-hot-toast";
 

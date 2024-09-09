@@ -1,62 +1,53 @@
+import { useContext, useEffect, useState } from "react";
 import { Layout } from "antd";
-import AuthorNav from "../../components/nav/AuthorNav";
-import { useState, useEffect, useContext } from "react";
-import { SyncOutlined } from "@ant-design/icons";
-import { useRouter } from "next/router";
+import AuthorNav from "../nav/AuthorNav";
 import { AuthContext } from "../../context/auth";
+import { useRouter } from "next/router";
+import { LoadingOutlined } from "@ant-design/icons";
 import axios from "axios";
-import LoadingToRedirect from "./LoadingToRedirect";
+import LoadingToRedirect from "../LoadingToRedirect";
 
 const { Content } = Layout;
 
-const AuthorLayout = ({ children }) => {
+function AuthorLayout({ children }) {
   // context
   const [auth, setAuth] = useContext(AuthContext);
+  // state
+  const [loading, setLoading] = useState(true);
   // hooks
   const router = useRouter();
 
-  // state
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    if (auth?.token) {
-      getCurrentAuthor();
-    }
+    // if (auth?.user?.role !== "Admin") {
+    //   router.push("/");
+    // } else {
+    //   setLoading(false);
+    // }
+    if (auth?.token) getCurrentAuthor();
   }, [auth?.token]);
 
   const getCurrentAuthor = async () => {
     try {
-      const { data } = await axios.get(`/current-author`);
-      console.log("current author", data);
-      if (data.ok) {
-        setLoading(false);
-      }
+      const { data } = await axios.get("/current-author");
+      setLoading(false);
     } catch (err) {
+      console.log(err);
       router.push("/");
     }
   };
 
-  return loading ? (
-    <LoadingToRedirect />
-  ) : (
+  if (loading) {
+    return <LoadingToRedirect />;
+  }
+
+  return (
     <Layout>
       <AuthorNav />
-
       <Layout>
-        <Content
-          style={{
-            margin: "16px 16px",
-            overflow: "auto",
-            height: "100vh",
-            // position: "fixed",
-            marginTop: 54,
-          }}
-        >
-          {children}
-        </Content>
+        <Content style={{ padding: "10px" }}>{children}</Content>
       </Layout>
     </Layout>
   );
-};
+}
 
 export default AuthorLayout;
