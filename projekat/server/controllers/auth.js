@@ -1,16 +1,14 @@
 const User = require("../models/user");
-// const Post = require("../models/post");
-import Post from "../models/post";
 const jwt = require("jsonwebtoken");
 const { hashPassword, comparePassword } = require("../helpers/auth");
 const nanoid = require("nanoid");
-import emailValidator from "email-validator";
+import emaliValidator from "email-validator";
 // sendgrid
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_KEY);
 
 exports.signup = async (req, res) => {
-  console.log("HIT SIGNUP");
+  // console.log("HIT SIGNUP", req.body);
   try {
     // validation
     const { name, email, password } = req.body;
@@ -45,12 +43,14 @@ exports.signup = async (req, res) => {
         password: hashedPassword,
       }).save();
 
+      // console.log("user saved in signup", user);
+
       // create signed token
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "7d",
       });
 
-      //   console.log(user);
+      // console.log(user);
       const { password, ...rest } = user._doc;
       return res.json({
         token,
@@ -61,16 +61,14 @@ exports.signup = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    res.sendStatus(400);
   }
 };
 
 exports.signin = async (req, res) => {
-  // console.log(req.body);
   try {
     const { email, password } = req.body;
     // check if our db has user with that email
-    const user = await User.findOne({ email }).populate("image");
+    const user = await User.findOne({ email });
     if (!user) {
       return res.json({
         error: "No user found",
@@ -154,23 +152,19 @@ exports.resetPassword = async (req, res) => {
     return res.json({ ok: true });
   } catch (err) {
     console.log(err);
-    res.sendStatus(400);
   }
 };
 
 export const currentUser = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).populate("image");
-    // res.json(user);
+    // const user = await User.findById(req.user._id);
     res.json({ ok: true });
   } catch (err) {
     console.log(err);
-    res.sendStatus(400);
   }
 };
 
 export const createUser = async (req, res) => {
-  console.log("CREATE USER => ", req.body);
   try {
     const { name, email, password, role, checked, website } = req.body;
     if (!name) {
@@ -188,11 +182,10 @@ export const createUser = async (req, res) => {
         error: "Password is required and should be 6 characters long",
       });
     }
+    // if user exist
     const exist = await User.findOne({ email });
     if (exist) {
-      return res.json({
-        error: "Email is taken",
-      });
+      return res.json({ error: "Email is taken" });
     }
     // hash password
     const hashedPassword = await hashPassword(password);
@@ -201,22 +194,22 @@ export const createUser = async (req, res) => {
     if (checked) {
       // prepare email
       const emailData = {
-        from: process.env.EMAIL_FROM,
         to: email,
+        from: process.env.EMAIL_FROM,
         subject: "Account created",
         html: `
-          <h2>Hi ${name},</h2>
-          <p>Your CMS account has been created sucessfully</p>
-          <h3>Your login details</h3>
-          <h4 style="color:red;">Email: ${email}</h4>
-          <h4 style="color:red;">Password: ${password}</h4>
-          <p>We recommend you to change your password after login.</p>
+        <h1>Hi ${name}</h1>
+        <p>Your CMS account has been created successfully.</p>
+        <h3>Your login details</h3>
+        <p style="color:red;">Email: ${email}</p>
+        <p style="color:red;">Password: ${password}</p>
+        <small>We recommend you to change your password after login.</small>
         `,
       };
 
       try {
         const data = await sgMail.send(emailData);
-        // console.log(data);
+        console.log("email sent => ", data);
       } catch (err) {
         console.log(err);
       }
@@ -230,6 +223,7 @@ export const createUser = async (req, res) => {
         role,
         website,
       }).save();
+
       const { password, ...rest } = user._doc;
       return res.json(rest);
     } catch (err) {
@@ -237,91 +231,34 @@ export const createUser = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    res.sendStatus(400);
   }
 };
 
 export const users = async (req, res) => {
   try {
-    const users = await User.find()
-      .select("-password -secret -resetCode")
-      .sort({ createdAt: 1 });
-    res.json(users);
+    const all = await User.find().select("-password -secret -resetCode");
+    res.json(all);
   } catch (err) {
     console.log(err);
-    res.sendStatus(400);
   }
 };
 
-export const removeUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     const { userId } = req.params;
-    if (userId === req.user._id) {
-      return res.json({
-        error: "Cannot delete yourself",
-      });
-    }
+    if (userId === req.user._id) return;
     const user = await User.findByIdAndDelete(userId);
     res.json(user);
   } catch (err) {
     console.log(err);
-    res.sendStatus(400);
   }
 };
 
-export const getUser = async (req, res) => {
+export const currentUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.params.userId).populate("image");
     res.json(user);
   } catch (err) {
-    console.log(err);
-    res.sendStatus(400);
-  }
-};
-
-export const updateUser = async (req, res) => {
-  try {
-    const { id, name, email, password, website, image } = req.body;
-
-    const userFromDb = await User.findById(id);
-    if (userFromDb._id.toString() !== req.user._id.toString()) {
-      return res.json({ error: "Unauthorized" });
-    }
-
-    // check valid email
-    if (!emailValidator.validate(email)) {
-      return res.json({ error: "Invalid email" });
-    }
-
-    // check if email is taken
-    const exist = await User.findOne({ email });
-    if (exist && exist._id.toString() !== userFromDb._id.toString()) {
-      return res.json({ error: "Email is taken" });
-    }
-
-    // check password length
-    if (password && password.length < 6) {
-      return res.json({
-        error: "Password is required and should be 6 characters long",
-      });
-    }
-
-    const hashedPassword = password ? await hashPassword(password) : undefined;
-    const updated = await User.findByIdAndUpdate(
-      id,
-      {
-        name: name || userFromDb.name,
-        email: email || userFromDb.email,
-        password: hashedPassword || userFromDb.password,
-        website: website || userFromDb.website,
-        image: image || userFromDb.image,
-      },
-      { new: true }
-    ).populate("image");
-    // console.log("updated user", updated);
-    res.json(updated);
-  } catch (err) {
-    res.sendStatus(400);
     console.log(err);
   }
 };
@@ -333,16 +270,14 @@ export const updateUserByAdmin = async (req, res) => {
     const userFromDb = await User.findById(id);
 
     // check valid email
-    if (!emailValidator.validate(email)) {
+    if (!emaliValidator.validate(email)) {
       return res.json({ error: "Invalid email" });
     }
-
     // check if email is taken
     const exist = await User.findOne({ email });
     if (exist && exist._id.toString() !== userFromDb._id.toString()) {
       return res.json({ error: "Email is taken" });
     }
-
     // check password length
     if (password && password.length < 6) {
       return res.json({
@@ -363,20 +298,56 @@ export const updateUserByAdmin = async (req, res) => {
       },
       { new: true }
     ).populate("image");
-    // console.log("updated user", updated);
+
     res.json(updated);
   } catch (err) {
-    res.sendStatus(400);
     console.log(err);
   }
 };
 
-export const currentUserProfile = async (req, res) => {
+export const updateUserByUser = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).populate("image");
-    res.json(user);
+    const { id, name, email, password, website, role, image } = req.body;
+
+    const userFromDb = await User.findById(id);
+
+    // check if user is himself/herself
+    if (userFromDb._id.toString() !== req.user._id.toString()) {
+      return res.status(403).send("You are not allowed to update this user");
+    }
+
+    // check valid email
+    if (!emaliValidator.validate(email)) {
+      return res.json({ error: "Invalid email" });
+    }
+    // check if email is taken
+    const exist = await User.findOne({ email });
+    if (exist && exist._id.toString() !== userFromDb._id.toString()) {
+      return res.json({ error: "Email is taken" });
+    }
+    // check password length
+    if (password && password.length < 6) {
+      return res.json({
+        error: "Password is required and should be 6 characters long",
+      });
+    }
+
+    const hashedPassword = password ? await hashPassword(password) : undefined;
+    const updated = await User.findByIdAndUpdate(
+      id,
+      {
+        name: name || userFromDb.name,
+        email: email || userFromDb.email,
+        password: hashedPassword || userFromDb.password,
+        website: website || userFromDb.website,
+        // role: role || userFromDb.role,
+        image: image || userFromDb.image,
+      },
+      { new: true }
+    ).populate("image");
+
+    res.json(updated);
   } catch (err) {
     console.log(err);
-    res.sendStatus(400);
   }
 };

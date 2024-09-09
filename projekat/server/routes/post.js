@@ -1,9 +1,8 @@
-const express = require("express");
+import express from "express";
 import formidable from "express-formidable";
-
 const router = express.Router();
 
-// middlewares
+// middleware
 import {
   requireSignin,
   isAdmin,
@@ -12,13 +11,12 @@ import {
   canDeleteMedia,
   canUpdateDeleteComment,
 } from "../middlewares";
-
 // controllers
 import {
   uploadImage,
-  uploadImageFile,
   createPost,
   posts,
+  uploadImageFile,
   media,
   removeMedia,
   singlePost,
@@ -29,16 +27,14 @@ import {
   postsForAdmin,
   createComment,
   comments,
-  commentCount,
-  removeComment,
   userComments,
+  commentCount,
   updateComment,
+  removeComment,
   getNumbers,
-  postsByCategory,
 } from "../controllers/post";
 
-// APPLY canPost MIDDLEWARE (if role is admin or author)
-router.post("/upload-image", requireSignin, isAdmin, uploadImage);
+router.post("/upload-image", requireSignin, canCreateRead, uploadImage);
 router.post(
   "/upload-image-file",
   formidable(),
@@ -47,34 +43,34 @@ router.post(
   uploadImageFile
 );
 router.post("/create-post", requireSignin, canCreateRead, createPost);
-router.get("/posts-for-admin", postsForAdmin);
+// router.get("/posts", posts);
 router.get("/posts/:page", posts);
+router.get("/post/:slug", singlePost);
+router.delete("/post/:postId", requireSignin, canUpdateDeletePost, removePost);
+router.put("/edit-post/:postId", requireSignin, canUpdateDeletePost, editPost);
+router.get("/posts-by-author", requireSignin, postsByAuthor);
+router.get("/post-count", postCount);
+router.get("/posts-for-admin", requireSignin, isAdmin, postsForAdmin);
+// media
 router.get("/media", requireSignin, canCreateRead, media);
 router.delete("/media/:id", requireSignin, canDeleteMedia, removeMedia);
-router.get("/post/:slug", singlePost);
-router.put("/post/:postId", requireSignin, canUpdateDeletePost, editPost);
-router.delete("/post/:postId", requireSignin, canUpdateDeletePost, removePost);
-router.get("/post-count", postCount);
-// author
-router.get("/posts-by-author", requireSignin, postsByAuthor);
-// comments
+// comment
 router.post("/comment/:postId", requireSignin, createComment);
 router.get("/comments/:page", requireSignin, isAdmin, comments);
-router.get("/comment-count", commentCount);
-router.delete(
-  "/comment/:commentId",
-  requireSignin,
-  canUpdateDeleteComment,
-  removeComment
-);
 router.get("/user-comments", requireSignin, userComments);
+router.get("/comment-count", commentCount);
 router.put(
   "/comment/:commentId",
   requireSignin,
   canUpdateDeleteComment,
   updateComment
 );
+router.delete(
+  "/comment/:commentId",
+  requireSignin,
+  canUpdateDeleteComment,
+  removeComment
+);
 router.get("/numbers", getNumbers);
-router.get("/posts-by-category/:slug", postsByCategory);
 
-module.exports = router;
+export default router;
