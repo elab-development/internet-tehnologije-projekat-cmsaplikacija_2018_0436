@@ -1,42 +1,56 @@
-import { useEffect, useState } from "react";
-import { Row, Col, Divider, Button } from "antd";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/auth";
 import Head from "next/head";
 import FullWidthImage from "../components/pages/FullWidthImage";
-import RenderProgress from "../components/pages/RenderProgress";
 import useNumbers from "../hooks/useNumbers";
-import ParallaxImage from "../components/pages/ParallaxImage";
-import usePost from "../hooks/useLatestPosts";
+import RenderProgress from "../components/posts/RenderProgress";
+import { Row, Col, Divider, Button } from "antd";
+import useLatestPosts from "../hooks/useLatestPosts";
 import useCategory from "../hooks/useCategory";
 import Link from "next/link";
+import ParallaxImage from "../components/pages/ParallaxImage";
 import { ThunderboltOutlined } from "@ant-design/icons";
 import Footer from "../components/pages/Footer";
 import axios from "axios";
+import useHome from "../hooks/useHome";
 
-const Home = () => {
+function Home() {
+  // context
+  const [auth, setAuth] = useContext(AuthContext);
+  // state for page customization
+  // const [title, setTitle] = useState("");
+  // const [subtitle, setSubtitle] = useState("");
+  // const [fullWidthImage, setFullWidthImage] = useState("");
+
   // hooks
   const { numbers } = useNumbers();
-  const { latestPosts } = usePost();
+  const { latestPosts } = useLatestPosts();
   const { categories } = useCategory();
-  // state
-  const [homepage, setHomepage] = useState({
-    fullWidthImage: null,
-    title: "",
-    subtitle: "",
-  });
 
-  useEffect(() => {
-    loadHomepage();
-  }, []);
+  const {
+    title,
+    subtitle,
+    fullWidthImage,
+    setTitle,
+    setSubtitle,
+    setFullWidthImage,
+  } = useHome();
 
-  const loadHomepage = async () => {
-    try {
-      const { data } = await axios.get("/page/home");
-      // console.log("get page in home ", data);
-      setHomepage(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // useEffect(() => {
+  //   loadHomepage();
+  // }, []);
+
+  // const loadHomepage = async () => {
+  //   try {
+  //     const { data } = await axios.get("/page/home");
+  //     console.log(data);
+  //     setTitle(data.title);
+  //     setSubtitle(data.subtitle);
+  //     setFullWidthImage(data.fullWidthImage);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <>
@@ -44,43 +58,60 @@ const Home = () => {
         <title>Modern Content Management System - CMS</title>
         <meta
           name="description"
-          content="Read latest blog posts on various topics"
+          content="Read latest blog posts on web development"
         />
       </Head>
-      <div style={{ marginBottom: 50 }}></div>
-      <FullWidthImage {...homepage} />
-      {/* {JSON.stringify(homepage, null, 4)} */}
-      {/* numbers */}
-      <Row>
+      <FullWidthImage
+        title={title}
+        subtitle={subtitle}
+        fullWidthImage={fullWidthImage?.url}
+      />
+      <Row style={{ marginTop: 40 }}>
+        {/* posts */}
         <Col
           span={6}
-          style={{ marginTop: 20, textAlign: "center", fontSize: 20 }}
+          style={{ marginTop: 50, textAlign: "center", fontSize: 20 }}
         >
-          <RenderProgress number={numbers.posts} name="Posts" />
+          <RenderProgress
+            number={numbers.posts}
+            name="Posts"
+            link="/admin/posts"
+          />
         </Col>
+        {/* comments */}
         <Col
           span={6}
-          style={{ marginTop: 20, textAlign: "center", fontSize: 20 }}
+          style={{ marginTop: 50, textAlign: "center", fontSize: 20 }}
         >
-          <RenderProgress number={numbers.categories} name="Categories" />
+          <RenderProgress
+            number={numbers.comments}
+            name="Comments"
+            link="/admin/comments"
+          />
         </Col>
+        {/* catgories */}
         <Col
           span={6}
-          style={{ marginTop: 20, textAlign: "center", fontSize: 20 }}
+          style={{ marginTop: 50, textAlign: "center", fontSize: 20 }}
         >
-          <RenderProgress number={numbers.comments} name="Comments" />
+          <RenderProgress
+            number={numbers.categories}
+            name="Categories"
+            link="/admin/categories"
+          />
         </Col>
+        {/* users */}
         <Col
           span={6}
-          style={{ marginTop: 20, textAlign: "center", fontSize: 20 }}
+          style={{ marginTop: 50, textAlign: "center", fontSize: 20 }}
         >
-          <RenderProgress number={numbers.users} name="Users" />
+          <RenderProgress
+            number={numbers.users}
+            name="Users"
+            link="/admin/users"
+          />
         </Col>
       </Row>
-
-      {/* parallax image */}
-      {/* parallax image */}
-      <div style={{ marginBottom: "20px" }}></div>
 
       <Row>
         <Col span={24}>
@@ -88,24 +119,21 @@ const Home = () => {
             <h2
               style={{
                 textAlign: "center",
-                fontSize: "86px",
+                fontSize: "74px",
                 textShadow: "2px 2px 4px #000000",
                 color: "#fff",
               }}
             >
               BLOG POSTS
             </h2>
-
             <Divider>
               <ThunderboltOutlined />
             </Divider>
             <div style={{ textAlign: "center" }}>
-              {latestPosts.map((p) => (
-                <Link href={`/post/${p.slug}`}>
+              {latestPosts.map((post) => (
+                <Link href={`/post/${post.slug}`} key={post._id}>
                   <a>
-                    <h3 style={{ color: "#fff" }} key={p._id}>
-                      {p.title}
-                    </h3>
+                    <h3>{post.title}</h3>
                   </a>
                 </Link>
               ))}
@@ -117,25 +145,23 @@ const Home = () => {
       <Row>
         <Col
           span={24}
-          style={{ textAlign: "center", marginTop: 80, marginBottom: 100 }}
+          style={{ textAlign: "center", marginTop: 80, marginBottom: 80 }}
         >
           <Divider>CATEGORIES</Divider>
-
-          {categories.map((c) => (
-            <Link href={`/category/${c.slug}`}>
-              <a>
-                <Button style={{ margin: 2 }} key={c._id}>
-                  {c.name}
-                </Button>
-              </a>
-            </Link>
-          ))}
+          <div style={{ textAlign: "center" }}>
+            {categories.map((c) => (
+              <Link href={`/category/${c.slug}`} key={c._id}>
+                <a>
+                  <Button style={{ margin: 2 }}>{c.name}</Button>
+                </a>
+              </Link>
+            ))}
+          </div>
         </Col>
       </Row>
-
       <Footer />
     </>
   );
-};
+}
 
 export default Home;

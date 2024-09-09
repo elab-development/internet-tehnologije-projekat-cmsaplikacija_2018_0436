@@ -1,12 +1,12 @@
 import AuthorLayout from "../../components/layout/AuthorLayout";
-import UserComments from "../../components/comment/UserComments";
+import UserComments from "../../components/comments/UserComments";
 
-const Comments = () => {
+function Author() {
   return (
     <AuthorLayout>
       <UserComments />
     </AuthorLayout>
   );
-};
+}
 
-export default Comments;
+export default Author;

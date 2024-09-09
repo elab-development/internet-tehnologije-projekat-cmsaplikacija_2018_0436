@@ -1,20 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { Card, Row, Col, Avatar, Button } from "antd";
+import { Row, Col, Card, Avatar, Button } from "antd";
 import Head from "next/head";
 import Link from "next/link";
-import Router, { useRouter } from "next/router";
 
 const { Meta } = Card;
 
-const Posts = ({ posts }) => {
-  // hook
-  const router = useRouter();
-  console.log("router -> ", router);
+export const Posts = ({ posts }) => {
   // state
   const [allPosts, setAllPosts] = useState(posts);
   const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(Number(router?.query?.page) || 1);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -29,6 +25,7 @@ const Posts = ({ posts }) => {
   const getTotal = async () => {
     try {
       const { data } = await axios.get("/post-count");
+      console.log("total", data);
       setTotal(data);
     } catch (err) {
       console.log(err);
@@ -42,8 +39,8 @@ const Posts = ({ posts }) => {
       setAllPosts([...allPosts, ...data]);
       setLoading(false);
     } catch (err) {
-      setLoading(false);
       console.log(err);
+      setLoading(false);
     }
   };
 
@@ -51,15 +48,11 @@ const Posts = ({ posts }) => {
     <>
       <Head>
         <title>Recent blog posts</title>
-        <meta
-          name="description"
-          content="Blog posts about web development, programming, and more."
-        />
+        <meta description="Blog posts about web development, programming etc" />
       </Head>
-      <div style={{ marginTop: "60px" }}></div>
       <Row gutter={12}>
         {allPosts.map((post) => (
-          <Col xs={24} xl={8} style={{ marginBottom: 12 }}>
+          <Col xs={24} xl={8} style={{ marginTop: 5, marginBottom: 5 }}>
             <Link href={`/post/${post.slug}`}>
               <a>
                 <Card
@@ -68,10 +61,7 @@ const Posts = ({ posts }) => {
                     <Avatar
                       shape="square"
                       style={{ height: "200px" }}
-                      src={
-                        post.featuredImage?.url ||
-                        "https://via.placeholder.com/1200x800.png?text=..."
-                      }
+                      src={post.featuredImage?.url || "images/default.jpeg"}
                       alt={post.title}
                     />
                   }
@@ -84,35 +74,26 @@ const Posts = ({ posts }) => {
         ))}
       </Row>
 
-      <Row>
-        <Col span={24} style={{ textAlign: "center" }}>
-          {allPosts?.length < total && (
-            <div style={{ padding: 50 }}>
-              <Button
-                size="large"
-                type="primary"
-                loading={loading}
-                onClick={() => {
-                  setPage(page + 1);
-                  Router.push({
-                    pathname: "/posts",
-                    query: { page: page + 1 },
-                  });
-                }}
-              >
-                Load More
-              </Button>
-            </div>
-          )}
-        </Col>
-      </Row>
+      {allPosts?.length < total && (
+        <Row>
+          <Col span={24} style={{ textAlign: "center", padding: 20 }}>
+            <Button
+              size="large"
+              type="primary"
+              loading={loading}
+              onClick={() => setPage(page + 1)}
+            >
+              Load More
+            </Button>
+          </Col>
+        </Row>
+      )}
     </>
   );
 };
 
 export async function getServerSideProps() {
   const { data } = await axios.get(`${process.env.API}/posts/1`);
-  // console.log("DATA =====> ", data.length);
   return {
     props: {
       posts: data,

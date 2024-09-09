@@ -1,8 +1,8 @@
-import AuthorLayout from "../../../components/layout/AuthorLayout";
 import { Row, Col } from "antd";
+import AuthorLayout from "../../../components/layout/AuthorLayout";
 import UploadFile from "../../../components/media/UploadFile";
 
-const NewMedia = () => {
+function NewMedia() {
   return (
     <AuthorLayout>
       <Row>
@@ -19,6 +19,6 @@ const NewMedia = () => {
       </Row>
     </AuthorLayout>
   );
-};
+}
 
 export default NewMedia;
