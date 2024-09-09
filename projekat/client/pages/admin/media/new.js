@@ -1,8 +1,8 @@
-import AdminLayout from "../../../components/layout/AdminLayout";
 import { Row, Col } from "antd";
+import AdminLayout from "../../../components/layout/AdminLayout";
 import UploadFile from "../../../components/media/UploadFile";
 
-const NewMedia = () => {
+function NewMedia() {
   return (
     <AdminLayout>
       <Row>
@@ -19,6 +19,6 @@ const NewMedia = () => {
       </Row>
     </AdminLayout>
   );
-};
+}
 
 export default NewMedia;

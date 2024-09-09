@@ -1,14 +1,13 @@
 import { Row, Col, Divider } from "antd";
 import AdminLayout from "../../components/layout/AdminLayout";
-import RenderProgress from "../../components/pages/RenderProgress";
+import RenderProgress from "../../components/posts/RenderProgress";
 import useNumbers from "../../hooks/useNumbers";
 
-const Admin = () => {
+function Admin() {
   const { numbers } = useNumbers();
 
   return (
     <AdminLayout>
-      {/* stats */}
       <Row>
         <Col span={24}>
           <Divider>
@@ -16,11 +15,12 @@ const Admin = () => {
           </Divider>
         </Col>
       </Row>
-      {/* progress numbers */}
+
       <Row>
+        {/* posts */}
         <Col
           span={12}
-          style={{ marginTop: 100, textAlign: "center", fontSize: 20 }}
+          style={{ marginTop: 50, textAlign: "center", fontSize: 20 }}
         >
           <RenderProgress
             number={numbers.posts}
@@ -28,19 +28,10 @@ const Admin = () => {
             link="/admin/posts"
           />
         </Col>
+        {/* comments */}
         <Col
           span={12}
-          style={{ marginTop: 100, textAlign: "center", fontSize: 20 }}
-        >
-          <RenderProgress
-            number={numbers.categories}
-            name="Categories"
-            link="/admin/categories"
-          />
-        </Col>
-        <Col
-          span={12}
-          style={{ marginTop: 100, textAlign: "center", fontSize: 20 }}
+          style={{ marginTop: 50, textAlign: "center", fontSize: 20 }}
         >
           <RenderProgress
             number={numbers.comments}
@@ -48,9 +39,24 @@ const Admin = () => {
             link="/admin/comments"
           />
         </Col>
+      </Row>
+
+      <Row>
+        {/* catgories */}
         <Col
           span={12}
-          style={{ marginTop: 100, textAlign: "center", fontSize: 20 }}
+          style={{ marginTop: 50, textAlign: "center", fontSize: 20 }}
+        >
+          <RenderProgress
+            number={numbers.categories}
+            name="Categories"
+            link="/admin/categories"
+          />
+        </Col>
+        {/* users */}
+        <Col
+          span={12}
+          style={{ marginTop: 50, textAlign: "center", fontSize: 20 }}
         >
           <RenderProgress
             number={numbers.users}
@@ -61,6 +67,6 @@ const Admin = () => {
       </Row>
     </AdminLayout>
   );
-};
+}
 
 export default Admin;

@@ -1,8 +1,8 @@
-import AdminLayout from "../../../components/layout/AdminLayout";
 import { Row, Col } from "antd";
+import AdminLayout from "../../../components/layout/AdminLayout";
 import MediaLibrary from "../../../components/media/MediaLibrary";
 
-const Library = () => {
+function AdminMediaLibrary() {
   return (
     <AdminLayout>
       <Row>
@@ -12,6 +12,6 @@ const Library = () => {
       </Row>
     </AdminLayout>
   );
-};
+}
 
-export default Library;
+export default AdminMediaLibrary;
