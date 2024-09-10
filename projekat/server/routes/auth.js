@@ -1,10 +1,10 @@
 const express = require("express");
-
 const router = express.Router();
 
-// middleware
-import { requireSignin, isAdmin, isAuthor } from "../middlewares";
-// controllers
+// Import middlewares using require
+const { requireSignin, isAdmin, isAuthor } = require("../middlewares");
+
+// Import controllers using require
 const {
   signup,
   signin,
@@ -19,11 +19,13 @@ const {
   updateUserByUser,
 } = require("../controllers/auth");
 
+// Define routes
 router.get("/", (req, res) => {
   return res.json({
-    data: "hello world from kaloraat auth API",
+    data: "Hello world from the auth API",
   });
 });
+
 router.post("/signup", signup);
 router.post("/signin", signin);
 router.post("/forgot-password", forgotPassword);

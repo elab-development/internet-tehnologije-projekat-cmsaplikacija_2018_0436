@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { AuthContext } from "../../context/auth";
 import { MediaContext } from "../../context/media";
-import Media from "../media";
+import Media from "../media/Media";
 
 const ProfileUpdate = ({ page = "admin" }) => {
   // context
