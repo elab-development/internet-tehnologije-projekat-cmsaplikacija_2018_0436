@@ -7,7 +7,7 @@ import { uploadImage } from "../../functions/upload";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { UploadOutlined } from "@ant-design/icons";
-import Media from "../media";
+import Media from "../media/Media";
 import { MediaContext } from "../../context/media";
 
 const { Option } = Select;
