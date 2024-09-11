@@ -20,10 +20,10 @@ class PostController extends Controller
     // Prikaz svih postova u okviru Laravel Blade-a
     public function indexView()
     {
-    // Fetch paginated posts (4 per page)
+    // Vrati po 6 stranica u okviru Blade template
     $posts = Post::paginate(6);
 
-    // Return the view with the paginated posts
+    // Vrati prikaz za blade template: welcome.blade.php
     return view('welcome', compact('posts'));
     }
 

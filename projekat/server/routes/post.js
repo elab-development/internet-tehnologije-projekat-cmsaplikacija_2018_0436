@@ -13,7 +13,6 @@ import {
 } from "../middlewares";
 // controllers
 import {
-  uploadImage,
   createPost,
   posts,
   uploadImageFile,
@@ -34,7 +33,6 @@ import {
   getNumbers,
 } from "../controllers/post";
 
-router.post("/upload-image", requireSignin, canCreateRead, uploadImage);
 router.post(
   "/upload-image-file",
   formidable(),
@@ -43,7 +41,6 @@ router.post(
   uploadImageFile
 );
 router.post("/create-post", requireSignin, canCreateRead, createPost);
-// router.get("/posts", posts);
 router.get("/posts/:page", posts);
 router.get("/post/:slug", singlePost);
 router.delete("/post/:postId", requireSignin, canUpdateDeletePost, removePost);

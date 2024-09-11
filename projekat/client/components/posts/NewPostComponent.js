@@ -155,7 +155,7 @@ function NewPostComponent({ page = "admin" }) {
           type="primary"
           onClick={handlePublish}
         >
-          Publish
+          Objavi
         </Button>
       </Col>
       {/* preview modal */}
