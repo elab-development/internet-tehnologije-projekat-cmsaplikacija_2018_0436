@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { Row, Col, Input, Button, Image, Divider } from "antd";
-import Media from "../../components/media/Media";
+import Media from "../../components/Media";
 import { MediaContext } from "../../context/media";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -10,6 +10,9 @@ import useHome from "../../hooks/useHome";
 const Customize = () => {
   // context
   const [media, setMedia] = useContext(MediaContext);
+  // state
+  //   const [title, setTitle] = useState("");
+  //   const [subtitle, setSubtitle] = useState("");
   const [loading, setLoading] = useState("");
 
   const {
@@ -21,28 +24,38 @@ const Customize = () => {
     setFullWidthImage,
   } = useHome();
 
-  const handleSave = async () => {
-    setLoading(true);
-    if (!media?.selected?._id) {
-      toast.error("Please select an image before saving");
-      setLoading(false);
-      return;
-    }
+  //   const [fullWidthImage, setFullWidthImage] = useState("");
 
+  //   useEffect(() => {
+  //     loadHomepage();
+  //   }, []);
+
+  //   const loadHomepage = async () => {
+  //     try {
+  //       const { data } = await axios.get("/page/home");
+  //       //   console.log(data);
+  //       setTitle(data.title);
+  //       setSubtitle(data.subtitle);
+  //       setFullWidthImage(data.fullWidthImage);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+
+  const handleSave = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.post("/page", {
         page: "home",
         title,
         subtitle,
         fullWidthImage: media?.selected?._id,
       });
-      console.log("Response data:", data); // Log response
+      setLoading(false);
       toast.success("Saved");
     } catch (err) {
-      console.log("Save error:", err); // Log error
-      toast.error("Save failed");
-    } finally {
-      setLoading(false); // Always reset loading state
+      console.log(err);
+      setLoading(false);
     }
   };
 

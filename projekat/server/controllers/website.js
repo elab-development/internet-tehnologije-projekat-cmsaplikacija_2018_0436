@@ -42,17 +42,18 @@ export const createPage = async (req, res) => {
     const found = await Website.findOne({ page });
 
     if (found) {
+      // update
       const updated = await Website.findOneAndUpdate({ page }, req.body, {
         new: true,
       });
-      return res.json(updated); // Send back updated page
+      return res.json(updated);
     } else {
+      // create
       const created = await new Website(req.body).save();
-      return res.json(created); // Send back created page
+      return res.json(created);
     }
   } catch (err) {
-    console.log("Error in createPage:", err);
-    res.status(500).json({ error: "Failed to create or update page" }); // Send error response
+    console.log(err);
   }
 };
 

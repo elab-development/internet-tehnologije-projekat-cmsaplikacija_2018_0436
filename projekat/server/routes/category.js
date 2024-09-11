@@ -1,17 +1,16 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
-// Import middlewares
-const { requireSignin, isAdmin } = require("../middlewares");
-
-// Import controllers
-const {
+// middleware
+import { requireSignin, isAdmin } from "../middlewares";
+// controllers
+import {
   create,
   categories,
   removeCategory,
   updateCategory,
   postsByCategory,
-} = require("../controllers/category");
+} from "../controllers/category";
 
 router.post("/category", requireSignin, isAdmin, create);
 router.get("/categories", categories);
@@ -19,4 +18,4 @@ router.delete("/category/:slug", requireSignin, isAdmin, removeCategory);
 router.put("/category/:slug", requireSignin, isAdmin, updateCategory);
 router.get("/posts-by-category/:slug", postsByCategory);
 
-module.exports = router;
+export default router;
