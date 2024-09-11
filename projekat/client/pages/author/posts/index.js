@@ -29,12 +29,10 @@ function Posts() {
   };
 
   const handleEdit = async (post) => {
-    // console.log("EDIT POST", post);
     return router.push(`/author/posts/${post.slug}`);
   };
 
   const handleDelete = async (post) => {
-    // console.log("DELETE POST", post);
     try {
       const answer = window.confirm("Are you sure you want to delete?");
       if (!answer) return;
@@ -57,11 +55,11 @@ function Posts() {
           <Button type="primary">
             <Link href="/author/posts/new">
               <a>
-                <PlusOutlined /> Add New
+                <PlusOutlined /> Dodaj novu
               </a>
             </Link>
           </Button>
-          <h1 style={{ marginTop: 15 }}>{posts?.length} Posts</h1>
+          <h1 style={{ marginTop: 15 }}>{posts?.length} Objave</h1>
           <PostsList
             posts={posts}
             handleEdit={handleEdit}

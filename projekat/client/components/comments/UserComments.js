@@ -43,14 +43,16 @@ function UserComments() {
 
   const handleDelete = async (comment) => {
     try {
-      const answer = window.confirm("Are you sure you want to delete?");
+      const answer = window.confirm(
+        "Da li ste sigurni da biste obrisali komentar?"
+      );
       if (!answer) return;
 
       const { data } = await axios.delete(`/comment/${comment._id}`);
       if (data?.ok) {
         setComments(comments.filter((c) => c._id !== comment._id));
         setTotal(total - 1);
-        toast.success("Comment deleted successfully");
+        toast.success("Komentar uspesno obrisan.");
       }
     } catch (err) {
       console.log(err);
@@ -73,7 +75,7 @@ function UserComments() {
       setLoading(false);
       setSelectedComment({});
 
-      toast.success("Comment updated");
+      toast.success("Komentar azuriran.");
     } catch (err) {
       console.log(err);
       setVisible(false);
@@ -88,10 +90,10 @@ function UserComments() {
     <>
       <Row>
         <Col span={24}>
-          <h1 style={{ marginTop: 15 }}>{comments?.length} Comments</h1>
+          <h1 style={{ marginTop: 15 }}>{comments?.length} Komentari</h1>
 
           <Input
-            placeholder="Search"
+            placeholder="Pretrazi"
             type="search"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value.toLowerCase())}
@@ -104,7 +106,7 @@ function UserComments() {
               <List.Item
                 actions={[
                   <Link href={`/post/${item?.postId?.slug}#${item._id}`}>
-                    <a>view</a>
+                    <a>vidi</a>
                   </Link>,
                   <a
                     onClick={() => {
@@ -113,7 +115,7 @@ function UserComments() {
                       setContent(item.content);
                     }}
                   >
-                    edit
+                    edituj
                   </a>,
                   <a onClick={() => handleDelete(item)}>delete</a>,
                 ]}
@@ -134,7 +136,7 @@ function UserComments() {
         <Col span={24}>
           <Modal
             visible={visible}
-            title="Update comment"
+            title="Azuriraj komentar"
             onOk={() => setVisible(false)}
             onCancel={() => setVisible(false)}
             footer={null}

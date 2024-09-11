@@ -23,7 +23,7 @@ const UploadFile = ({ redirectToLibrary = false, page = "admin" }) => {
         console.log(info.file, info.fileList);
       }
       if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
+        message.success(`${info.file.name} fajl uploadovan uspesno!`);
         // console.log("info.file => ", info.file);
         setMedia({
           images: [...media.images, info.file.response],
@@ -34,14 +34,16 @@ const UploadFile = ({ redirectToLibrary = false, page = "admin" }) => {
           router.push(`/${page}/media/library`);
         }
       } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
+        message.error(`${info.file.name} nije uspesno uploadovan.`);
       }
     },
   };
 
   return (
     <Upload {...props} maxCount={1}>
-      <Button icon={<UploadOutlined />}>Click to Upload</Button>
+      <Button icon={<UploadOutlined />}>
+        Klikni ovde kako bi uploadovao sliku
+      </Button>
     </Upload>
   );
 };

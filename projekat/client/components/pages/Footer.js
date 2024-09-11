@@ -13,19 +13,20 @@ const Footer = () => (
         <Col span={8} style={{ textAlign: "center" }}>
           <UsergroupAddOutlined style={{ fontSize: 80 }} />
           <br />
-          The ultimate blogging platform
+          Moderna CMS platforma
         </Col>
 
         <Col span={8} style={{ textAlign: "center" }}>
           <ApiOutlined style={{ fontSize: 80 }} />
           <br />
-          Built using MERN stack (MongoDB Express React Node)
+          Izgradjena koristeci MERN aritekturu (MongoDB + Express.js + React (sa
+          Next.js))
         </Col>
 
         <Col span={8} style={{ textAlign: "center" }}>
           <CopyrightOutlined style={{ fontSize: 80 }} />
           <br />
-          Copyright {new Date().getFullYear()} &copy; All rights reserved
+          ITEH {new Date().getFullYear()} &copy;. Sva prava zadrzana.
         </Col>
       </Row>
       <br />

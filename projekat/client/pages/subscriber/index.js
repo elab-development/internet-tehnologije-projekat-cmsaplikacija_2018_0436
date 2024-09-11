@@ -3,13 +3,8 @@ import SubscriberLayout from "../../components/layout/SubscriberLayout";
 function Subscriber() {
   return (
     <SubscriberLayout>
-      <h1>This is subscriber page</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius vitae
-        veritatis veniam itaque eaque doloremque molestias tenetur fugit quasi
-        quaerat, laborum odio ut iure blanditiis, doloribus omnis laudantium?
-        Rem, doloribus!
-      </p>
+      <h1>Stranica za pretplatnika izgleda ovako :)</h1>
+      <p>Vise sadrzaja uskoro...</p>
     </SubscriberLayout>
   );
 }

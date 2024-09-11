@@ -39,8 +39,7 @@ function NewPostComponent({ page = "admin" }) {
   const [loadedCategories, setLoadedCategories] = useState([]);
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  // media Modal
-  // const [visibleMedia, setVisibleMedia] = useState(false);
+
   // hook
   const router = useRouter();
 
@@ -71,7 +70,7 @@ function NewPostComponent({ page = "admin" }) {
         setLoading(false);
       } else {
         // console.log("POST PUBLISHED RES => ", data);
-        toast.success("Post created successfully");
+        toast.success("Post kreiran uspesno!");
         localStorage.removeItem("post-title");
         localStorage.removeItem("post-content");
         setMedia({ ...media, selected: null });
@@ -79,7 +78,7 @@ function NewPostComponent({ page = "admin" }) {
       }
     } catch (err) {
       console.log(err);
-      toast.error("Post create failed. Try again.");
+      toast.error("Post neuspesno kreiran.");
       setLoading(false);
     }
   };
@@ -87,11 +86,11 @@ function NewPostComponent({ page = "admin" }) {
   return (
     <Row>
       <Col span={14} offset={1}>
-        <h1>Create new post</h1>
+        <h1>Kreiraj novu objavu</h1>
         <Input
           size="large"
           value={title}
-          placeholder="Give your post a title"
+          placeholder="Napisi naslov objave..."
           onChange={(e) => {
             setTitle(e.target.value);
             localStorage.setItem("post-title", JSON.stringify(e.target.value));
@@ -113,8 +112,6 @@ function NewPostComponent({ page = "admin" }) {
 
         <br />
         <br />
-
-        {/* <pre>{JSON.stringify(loadedCategories, null, 4)}</pre> */}
       </Col>
 
       <Col span={6} offset={1}>
@@ -122,7 +119,7 @@ function NewPostComponent({ page = "admin" }) {
           style={{ margin: "10px 0px 10px 0px", width: "100%" }}
           onClick={() => setVisible(true)}
         >
-          Preview
+          Prikazi pregled pre objavljivanja
         </Button>
 
         <Button
@@ -132,12 +129,12 @@ function NewPostComponent({ page = "admin" }) {
           <UploadOutlined /> Featured Image
         </Button>
 
-        <h4>Categories</h4>
+        <h4>Kategorije</h4>
 
         <Select
           mode="multiple"
           allowClear={true}
-          placeholder="Select categories"
+          placeholder="Odaberi kategorije...."
           style={{ width: "100%" }}
           onChange={(v) => setCategories(v)}
         >

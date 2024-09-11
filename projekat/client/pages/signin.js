@@ -36,7 +36,7 @@ function Signin() {
         setAuth(data);
         // save user and token to local storage
         localStorage.setItem("auth", JSON.stringify(data));
-        toast.success("Successfully signed in");
+        toast.success("Uspesno prijavljivanje. Dobrodosli u aplikaciju!");
         // redirect user
         if (data?.user?.role === "Admin") {
           router.push("/admin");
@@ -50,14 +50,14 @@ function Signin() {
     } catch (err) {
       console.log("err => ", err);
       setLoading(false);
-      toast.error("Signin failed. Try again.");
+      toast.error("Prijava neuspesna. Pokusaj ponovo.");
     }
   };
 
   return (
     <Row>
       <Col span={8} offset={8}>
-        <h1 style={{ paddingTop: "100px" }}>Signin</h1>
+        <h1 style={{ paddingTop: "100px" }}>Prijava</h1>
 
         <Form
           // form={form}
@@ -65,8 +65,8 @@ function Signin() {
           className="login-form"
           initialValues={{
             remember: true,
-            email: "ryan@gmail.com",
-            password: "rrrrrr",
+            email: "jelena@gmail.com",
+            password: "",
           }}
           onFinish={onFinish}
         >
@@ -80,7 +80,7 @@ function Signin() {
           {/* password */}
           <Form.Item
             name="password"
-            rules={[{ required: true, message: "Please input your Password!" }]}
+            rules={[{ required: true, message: "Unesi svoju sifru!" }]}
           >
             <Input.Password
               prefix={<LockOutlined className="site-form-item-icon" />}
@@ -90,7 +90,7 @@ function Signin() {
           </Form.Item>
 
           <Link href="/forgot-password">
-            <a>Forgot Password</a>
+            <a>Da li si zaboravio sifru?</a>
           </Link>
           <br />
           <br />
@@ -101,12 +101,12 @@ function Signin() {
               htmlType="submit"
               className="login-form-button"
             >
-              Login
+              Prijavi se
             </Button>
             <br />
             Or{" "}
             <Link href="/signup">
-              <a>Register now!</a>
+              <a>Registruj se sada!</a>
             </Link>
           </Form.Item>
         </Form>

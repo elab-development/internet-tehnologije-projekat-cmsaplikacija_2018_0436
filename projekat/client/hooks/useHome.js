@@ -14,7 +14,6 @@ const useHome = () => {
   const loadHomepage = async () => {
     try {
       const { data } = await axios.get("/page/home");
-      //   console.log(data);
       setTitle(data.title);
       setSubtitle(data.subtitle);
       setFullWidthImage(data.fullWidthImage);

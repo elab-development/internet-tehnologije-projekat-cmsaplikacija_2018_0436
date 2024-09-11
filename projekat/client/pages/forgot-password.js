@@ -25,13 +25,15 @@ function ForgotPassword() {
         toast.error(data.error);
         setLoading(false);
       } else {
-        toast.success("Check your email. Password reset code is sent.");
+        toast.success(
+          "Proveri email adresu. Kod za resetovanje sifre je poslat."
+        );
         setLoading(false);
         setVisible(true);
       }
     } catch (err) {
       console.log(err);
-      toast.error("Forgot password failed. Try again.");
+      toast.error("Neuspeh. Probaj ponovo.");
       setLoading(false);
     }
   };
@@ -45,7 +47,7 @@ function ForgotPassword() {
         setLoading(false);
       } else {
         toast.success(
-          "Password changed successfully. Please login with your new password"
+          "Sifra promenjena uspesno. Prijavi se sa novom sifrom nakon zatvaranja ovog obavestenja."
         );
         form.resetFields(["email"]);
         setLoading(false);
@@ -53,7 +55,7 @@ function ForgotPassword() {
       }
     } catch (err) {
       console.log(err);
-      toast.error("Reset password failed. Try again.");
+      toast.error("Neuspeh.");
       setLoading(false);
     }
   };
@@ -61,7 +63,7 @@ function ForgotPassword() {
   return (
     <Row>
       <Col span={8} offset={8}>
-        <h1 style={{ paddingTop: "100px" }}>Forgot Password</h1>
+        <h1 style={{ paddingTop: "100px" }}>Zaboravili ste sifru?</h1>
 
         <Form
           form={form}
@@ -82,7 +84,7 @@ function ForgotPassword() {
               <Form.Item name="resetCode">
                 <Input
                   prefix={<MailOutlined className="site-form-item-icon" />}
-                  placeholder="Enter reset code"
+                  placeholder="Unesi kod za resetovanje sifre"
                 />
               </Form.Item>
 
@@ -91,14 +93,14 @@ function ForgotPassword() {
                 rules={[
                   {
                     required: true,
-                    message: "Please enter your new Password!",
+                    message: "Unesite novu sifru!",
                   },
                 ]}
               >
                 <Input.Password
                   prefix={<LockOutlined className="site-form-item-icon" />}
                   type="password"
-                  placeholder="New Password"
+                  placeholder="Nova sifra..."
                 />
               </Form.Item>
             </>
@@ -111,7 +113,7 @@ function ForgotPassword() {
               className="login-form-button"
               loading={loading}
             >
-              Submit
+              Potvrdi
             </Button>
           </Form.Item>
         </Form>

@@ -17,10 +17,6 @@ import useHome from "../hooks/useHome";
 function Home() {
   // context
   const [auth, setAuth] = useContext(AuthContext);
-  // state for page customization
-  // const [title, setTitle] = useState("");
-  // const [subtitle, setSubtitle] = useState("");
-  // const [fullWidthImage, setFullWidthImage] = useState("");
 
   // hooks
   const { numbers } = useNumbers();
@@ -36,30 +32,11 @@ function Home() {
     setFullWidthImage,
   } = useHome();
 
-  // useEffect(() => {
-  //   loadHomepage();
-  // }, []);
-
-  // const loadHomepage = async () => {
-  //   try {
-  //     const { data } = await axios.get("/page/home");
-  //     console.log(data);
-  //     setTitle(data.title);
-  //     setSubtitle(data.subtitle);
-  //     setFullWidthImage(data.fullWidthImage);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
   return (
     <>
       <Head>
-        <title>Modern Content Management System - CMS</title>
-        <meta
-          name="description"
-          content="Read latest blog posts on web development"
-        />
+        <title>CMS aplikacija</title>
+        <meta name="description" content="Citaj najnovije blogove" />
       </Head>
       <FullWidthImage
         title={title}
@@ -124,7 +101,7 @@ function Home() {
                 color: "#fff",
               }}
             >
-              BLOG POSTS
+              OBJAVE
             </h2>
             <Divider>
               <ThunderboltOutlined />
@@ -147,7 +124,7 @@ function Home() {
           span={24}
           style={{ textAlign: "center", marginTop: 80, marginBottom: 80 }}
         >
-          <Divider>CATEGORIES</Divider>
+          <Divider>KATEGORIJE</Divider>
           <div style={{ textAlign: "center" }}>
             {categories.map((c) => (
               <Link href={`/category/${c.slug}`} key={c._id}>

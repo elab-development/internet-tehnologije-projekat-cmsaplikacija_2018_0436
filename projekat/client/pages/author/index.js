@@ -3,8 +3,8 @@ import AuthorLayout from "../../components/layout/AuthorLayout";
 function Author() {
   return (
     <AuthorLayout>
-      <h1>This is author page</h1>
-      <p>More content...</p>
+      <h1>Stranica koju vidi autor :)</h1>
+      <p>Vise sadrzaja samo za autora uskoro...</p>
     </AuthorLayout>
   );
 }

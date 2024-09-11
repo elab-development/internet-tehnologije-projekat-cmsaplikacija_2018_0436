@@ -49,14 +49,14 @@ const SubscriberNav = () => {
       >
         <Menu.Item key="1" icon={<SettingOutlined />}>
           <Link href="/subscriber">
-            <a className={activeName("/subscriber")}>Dashboard</a>
+            <a className={activeName("/subscriber")}>Kontrolni centar</a>
           </Link>
         </Menu.Item>
 
         {/* comments */}
         <Menu.Item key="9" icon={<CommentOutlined />}>
           <Link href="/subscriber/comments">
-            <a className={activeName("/subscriber/comments")}>Comments</a>
+            <a className={activeName("/subscriber/comments")}>Komentari</a>
           </Link>
         </Menu.Item>
 
@@ -64,7 +64,7 @@ const SubscriberNav = () => {
         <Menu.Item key="13" icon={<UserOutlined />}>
           <Link href={`/subscriber/${auth?.user?._id}`}>
             <a className={activeName(`/subscriber/${auth?.user?._id}`)}>
-              Profile
+              Profil
             </a>
           </Link>
         </Menu.Item>

@@ -22,21 +22,21 @@ function ContactForm() {
         toast.error(data?.error);
         setLoading(false);
       } else {
-        toast.success("Your message has been sent");
+        toast.success("Vasa poruka je uspesno poslata!");
         form.resetFields();
         setLoading(false);
       }
     } catch (err) {
       console.log("err => ", err);
       setLoading(false);
-      toast.error("Email failed. Try again.");
+      toast.error("Email nije ispravan. Pokusaj ponovo.");
     }
   };
 
   return (
     <Row>
       <Col span={8} offset={8}>
-        <h1 style={{ paddingTop: "100px" }}>Contact</h1>
+        <h1 style={{ paddingTop: "100px" }}>Kontakt</h1>
 
         <Form
           form={form}
@@ -47,34 +47,34 @@ function ContactForm() {
           {/* name */}
           <Form.Item
             name="name"
-            rules={[{ required: true, message: "Please enter your name" }]}
+            rules={[{ required: true, message: "Unesi svoje ime..." }]}
             hasFeedback
           >
             <Input
               prefix={<MailOutlined className="site-form-item-icon" />}
-              placeholder="Your name"
+              placeholder="Vase ime"
             />
           </Form.Item>
           {/* email */}
           <Form.Item
             name="email"
-            rules={[{ required: true, message: "Please enter your email" }]}
+            rules={[{ required: true, message: "Unesi svoj email..." }]}
             hasFeedback
           >
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
-              placeholder="Your email"
+              placeholder="Vas email"
             />
           </Form.Item>
           {/* message */}
           <Form.Item
             name="message"
-            rules={[{ required: true, message: "Please enter your message" }]}
+            rules={[{ required: true, message: "Unesi poruku..." }]}
             hasFeedback
           >
             <Input.TextArea
               prefix={<MailOutlined className="site-form-item-icon" />}
-              placeholder="Write your message here.."
+              placeholder="Napisi poruku ovde..."
             />
           </Form.Item>
 
@@ -84,7 +84,7 @@ function ContactForm() {
               htmlType="submit"
               className="login-form-button"
             >
-              Submit
+              Posalji poruku!
             </Button>
           </Form.Item>
         </Form>

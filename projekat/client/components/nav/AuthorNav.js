@@ -55,34 +55,38 @@ const AuthorNav = () => {
       >
         <Menu.Item key="1" icon={<SettingOutlined />}>
           <Link href="/author">
-            <a className={activeName("/author")}>Dashboard</a>
+            <a className={activeName("/author")}>Kontrolni centar</a>
           </Link>
         </Menu.Item>
 
         {/* posts */}
-        <SubMenu key="2" icon={<PushpinOutlined />} title="Posts">
+        <SubMenu key="2" icon={<PushpinOutlined />} title="Objave">
           <Menu.Item key="3">
             <Link href="/author/posts">
-              <a className={activeName("/author/posts")}>All Posts</a>
+              <a className={activeName("/author/posts")}>Sve objave</a>
             </Link>
           </Menu.Item>
           <Menu.Item key="4">
             <Link href="/author/posts/new">
-              <a className={activeName("/author/posts/new")}>Add New</a>
+              <a className={activeName("/author/posts/new")}>Dodaj novu</a>
             </Link>
           </Menu.Item>
         </SubMenu>
 
         {/* library */}
-        <SubMenu key="6" icon={<CameraOutlined />} title="Media">
+        <SubMenu key="6" icon={<CameraOutlined />} title="Mediji">
           <Menu.Item key="7">
             <Link href="/author/media/library">
-              <a className={activeName("/author/media/library")}>Library</a>
+              <a className={activeName("/author/media/library")}>
+                Biblioteka medija
+              </a>
             </Link>
           </Menu.Item>
           <Menu.Item key="8">
             <Link href="/author/media/new">
-              <a className={activeName("/author/media/new")}>Add New</a>
+              <a className={activeName("/author/media/new")}>
+                Dodaj novu sliku
+              </a>
             </Link>
           </Menu.Item>
         </SubMenu>
@@ -90,14 +94,14 @@ const AuthorNav = () => {
         {/* comments */}
         <Menu.Item key="9" icon={<CommentOutlined />}>
           <Link href="/author/comments">
-            <a className={activeName("/author/comments")}>Comments</a>
+            <a className={activeName("/author/comments")}>Komentari</a>
           </Link>
         </Menu.Item>
 
         {/* profile */}
         <Menu.Item key="13" icon={<UserOutlined />}>
           <Link href={`/author/${auth?.user?._id}`}>
-            <a className={activeName(`/author/${auth?.user?._id}`)}>Profile</a>
+            <a className={activeName(`/author/${auth?.user?._id}`)}>Profil</a>
           </Link>
         </Menu.Item>
       </Menu>

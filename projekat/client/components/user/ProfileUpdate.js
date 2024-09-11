@@ -27,7 +27,6 @@ const ProfileUpdate = ({ page = "admin" }) => {
     const currentUser = async () => {
       try {
         const { data } = await axios.get(`/user/${router?.query?.id}`);
-        // console.log("current_user", data);
         setId(data._id);
         setName(data.name);
         setEmail(data.email);
@@ -70,11 +69,11 @@ const ProfileUpdate = ({ page = "admin" }) => {
           localStorage.setItem("auth", JSON.stringify(fromLocalStorage));
         }
 
-        toast.success("User updated successfully");
+        toast.success("Korisnik azuriran uspesno!");
       }
     } catch (err) {
       console.log(err);
-      toast.error("User update failed. Try again.");
+      toast.error("Korisnik azuriran neuspesno!");
       setLoading(false);
     }
   };
@@ -83,7 +82,7 @@ const ProfileUpdate = ({ page = "admin" }) => {
   return (
     <Row>
       <Col span={12} offset={6}>
-        <h4 style={{ marginBottom: "-10px" }}>Profile update</h4>
+        <h4 style={{ marginBottom: "-10px" }}>Azuriranja profila</h4>
 
         <div style={{ marginBottom: 20, textAlign: "center" }}>
           {media.selected ? (
@@ -106,7 +105,7 @@ const ProfileUpdate = ({ page = "admin" }) => {
         <Input
           style={{ margin: "20px 0px 10px 0px" }}
           size="large"
-          placeholder="Full name"
+          placeholder="Puno ime"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -120,7 +119,7 @@ const ProfileUpdate = ({ page = "admin" }) => {
         <Input
           style={{ margin: "10px 0px 10px 0px" }}
           size="large"
-          placeholder="Website"
+          placeholder="Vebsajt"
           value={website}
           onChange={(e) => setWebsite(e.target.value)}
         />
@@ -128,7 +127,7 @@ const ProfileUpdate = ({ page = "admin" }) => {
         <Input.Password
           style={{ margin: "10px 0px 10px 0px" }}
           size="large"
-          placeholder="Password"
+          placeholder="Sifra"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -139,8 +138,8 @@ const ProfileUpdate = ({ page = "admin" }) => {
             style={{ margin: "10px 0px 10px 0px", width: "100%" }}
             onChange={(e) => setRole(e)}
           >
-            <Select.Option value="Subscriber">Subscriber</Select.Option>
-            <Select.Option value="Author">Author</Select.Option>
+            <Select.Option value="Subscriber">Pretplatnik</Select.Option>
+            <Select.Option value="Author">Autor</Select.Option>
             <Select.Option value="Admin">Admin</Select.Option>
           </Select>
         )}
@@ -152,7 +151,7 @@ const ProfileUpdate = ({ page = "admin" }) => {
           loading={loading}
           block
         >
-          Submit
+          Izmeni
         </Button>
       </Col>
     </Row>

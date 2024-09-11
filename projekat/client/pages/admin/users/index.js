@@ -33,13 +33,13 @@ export default function AllUsers() {
   const handleDelete = async (user) => {
     try {
       if (user._id === auth.user._id) {
-        alert("you can not delete yourself");
+        alert("Ne mozete obrisati sami sebe!");
         return;
       }
       try {
         const { data } = await axios.delete(`/user/${user._id}`);
         setUsers((prev) => prev.filter((u) => u._id !== user._id));
-        toast.error("User deleted");
+        toast.error("Korisnik obrisan.");
       } catch (err) {
         console.log(err);
       }
@@ -56,10 +56,10 @@ export default function AllUsers() {
     <AdminLayout>
       <Row>
         <Col span={24}>
-          <h4>All Users ({users?.length})</h4>
+          <h4>Svi korisnici ({users?.length})</h4>
 
           <Input
-            placeholder="Search"
+            placeholder="Pretraga"
             type="search"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value.toLowerCase())}
@@ -72,13 +72,13 @@ export default function AllUsers() {
               <List.Item
                 actions={[
                   <Link href={`/admin/users/${user._id}`}>
-                    <a>edit</a>
+                    <a>edituj</a>
                   </Link>,
                   <a
                     disabled={user?._id === auth?.user?._id}
                     onClick={() => handleDelete(user)}
                   >
-                    delete
+                    obrisi
                   </a>,
                 ]}
               >

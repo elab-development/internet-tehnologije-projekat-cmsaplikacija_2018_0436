@@ -56,14 +56,14 @@ function Comments() {
 
   const handleDelete = async (comment) => {
     try {
-      const answer = window.confirm("Are you sure you want to delete?");
+      const answer = window.confirm("Da li ste sigurni da biste obrisali?");
       if (!answer) return;
 
       const { data } = await axios.delete(`/comment/${comment._id}`);
       if (data?.ok) {
         setComments(comments.filter((c) => c._id !== comment._id));
         setTotal(total - 1);
-        toast.success("Comment deleted successfully");
+        toast.success("Komentar uspesno obrisan!");
       }
     } catch (err) {
       console.log(err);
@@ -78,10 +78,10 @@ function Comments() {
     <AdminLayout>
       <Row>
         <Col span={24}>
-          <h1 style={{ marginTop: 15 }}>{comments?.length} Comments</h1>
+          <h1 style={{ marginTop: 15 }}>{comments?.length} Komentari</h1>
 
           <Input
-            placeholder="Search"
+            placeholder="Pretraga"
             type="search"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value.toLowerCase())}
@@ -94,13 +94,13 @@ function Comments() {
               <List.Item
                 actions={[
                   <Link href={`/post/${item?.postId?.slug}#${item._id}`}>
-                    <a>view</a>
+                    <a>vidi</a>
                   </Link>,
                   <a onClick={() => handleDelete(item)}>delete</a>,
                 ]}
               >
                 <List.Item.Meta
-                  description={`On ${item?.postId?.title} | ${
+                  description={`Datum: ${item?.postId?.title} | ${
                     item?.postedBy?.name
                   } | ${dayjs(item.createdAt).format("L LT")}`}
                   title={item.content}
@@ -120,7 +120,7 @@ function Comments() {
               loading={loading}
               onClick={() => setPage(page + 1)}
             >
-              Load More
+              Ucitaj jos
             </Button>
           </Col>
         </Row>

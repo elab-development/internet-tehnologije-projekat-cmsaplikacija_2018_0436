@@ -47,8 +47,8 @@ export const Posts = ({ posts }) => {
   return (
     <>
       <Head>
-        <title>Recent blog posts</title>
-        <meta description="Blog posts about web development, programming etc" />
+        <title>Nedavne objave</title>
+        <meta description="Blog postovi o raznim temama..." />
       </Head>
       <Row gutter={12}>
         {allPosts.map((post) => (
@@ -83,7 +83,7 @@ export const Posts = ({ posts }) => {
               loading={loading}
               onClick={() => setPage(page + 1)}
             >
-              Load More
+              Ucitaj vise
             </Button>
           </Col>
         </Row>

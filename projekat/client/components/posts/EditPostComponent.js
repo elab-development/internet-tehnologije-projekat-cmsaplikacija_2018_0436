@@ -31,7 +31,9 @@ function EditPost({ page = "admin" }) {
   const router = useRouter();
 
   useEffect(() => {
-    loadPost();
+    if (router?.query?.slug) {
+      loadPost();
+    }
   }, [router?.query?.slug]);
 
   useEffect(() => {
@@ -45,7 +47,7 @@ function EditPost({ page = "admin" }) {
       setTitle(data.post.title);
       setContent(data.post.content);
       setFeaturedImage(data.post.featuredImage);
-      setPostId(data._id);
+      setPostId(data.post._id);
       // push category names
       let arr = [];
       data.post.categories.map((c) => arr.push(c.name));
@@ -66,6 +68,10 @@ function EditPost({ page = "admin" }) {
   };
 
   const handlePublish = async () => {
+    if (!postId) {
+      toast.error("Post ID nedostaje. Ne moze se azurirati post.");
+      return;
+    }
     try {
       setLoading(true);
       const { data } = await axios.put(`/edit-post/${postId}`, {
@@ -83,13 +89,13 @@ function EditPost({ page = "admin" }) {
         setLoading(false);
       } else {
         // console.log("POST PUBLISHED RES => ", data);
-        toast.success("Post updated successfully");
+        toast.success("Post uspesno azuriran!");
         setMedia({ ...media, selected: null });
         router.push(`/${page}/posts`);
       }
     } catch (err) {
       console.log(err);
-      toast.error("Post create failed. Try again.");
+      toast.error("Kreiranje objave neuspesno!");
       setLoading(false);
     }
   };
@@ -97,11 +103,11 @@ function EditPost({ page = "admin" }) {
   return (
     <Row>
       <Col span={14} offset={1}>
-        <h1>Edit post</h1>
+        <h1>Izmeni objavu</h1>
         <Input
           size="large"
           value={title}
-          placeholder="Give your post a title"
+          placeholder="Postavi naziv objave"
           onChange={(e) => {
             setTitle(e.target.value);
             localStorage.setItem("post-title", JSON.stringify(e.target.value));
@@ -110,7 +116,7 @@ function EditPost({ page = "admin" }) {
         <br />
         <br />
         {loading ? (
-          <div>Loading...</div>
+          <div>Ucitavanje...</div>
         ) : (
           <div className="editor-scroll">
             <Editor
@@ -127,8 +133,6 @@ function EditPost({ page = "admin" }) {
 
         <br />
         <br />
-
-        {/* <pre>{JSON.stringify(loadedCategories, null, 4)}</pre> */}
       </Col>
 
       <Col span={6} offset={1}>
@@ -143,15 +147,15 @@ function EditPost({ page = "admin" }) {
           style={{ margin: "10px 0px 10px 0px", width: "100%" }}
           onClick={() => setMedia({ ...media, showMediaModal: true })}
         >
-          <UploadOutlined /> Featured Image
+          <UploadOutlined /> Istaknuta slika
         </Button>
 
-        <h4>Categories</h4>
+        <h4>Kategorije</h4>
 
         <Select
           mode="multiple"
           allowClear={true}
-          placeholder="Select categories"
+          placeholder="Selektuj kategorije..."
           style={{ width: "100%" }}
           onChange={(v) => setCategories(v)}
           value={[...categories]}

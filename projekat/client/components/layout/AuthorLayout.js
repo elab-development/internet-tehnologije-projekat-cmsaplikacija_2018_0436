@@ -18,11 +18,6 @@ function AuthorLayout({ children }) {
   const router = useRouter();
 
   useEffect(() => {
-    // if (auth?.user?.role !== "Admin") {
-    //   router.push("/");
-    // } else {
-    //   setLoading(false);
-    // }
     if (auth?.token) getCurrentAuthor();
   }, [auth?.token]);
 

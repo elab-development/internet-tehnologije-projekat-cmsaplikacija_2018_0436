@@ -43,7 +43,7 @@ export const SinglePost = ({ post, postComments }) => {
       const { data } = await axios.post(`/comment/${post._id}`, { comment });
       setComments([data, ...comments]);
       setComment("");
-      toast.success("Comment posted successfully");
+      toast.success("Komentar postavljen uspesno!");
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -127,7 +127,7 @@ export const SinglePost = ({ post, postComments }) => {
         </Col>
 
         <Col xs={22} xl={6} offset={1}>
-          <Divider>Categories</Divider>
+          <Divider>Kategorije</Divider>
 
           {categories.map((c) => (
             <Link href={`/category/${c.slug}`} key={c._id}>
@@ -137,7 +137,7 @@ export const SinglePost = ({ post, postComments }) => {
             </Link>
           ))}
 
-          <Divider>Latest Posts</Divider>
+          <Divider>Najnovije objave</Divider>
           {latestPosts.map((p) => (
             <Link href={`/post/${p.slug}`} key={p._id}>
               <a>

@@ -21,7 +21,7 @@ const SingleCategory = ({ posts, category }) => {
         <title>{category.name}</title>
         <meta
           name="description"
-          content={`Read latest posts on ${category.name}`}
+          content={`Procitaj poslednje objave: ${category.name}`}
         />
       </Head>
 
@@ -61,7 +61,7 @@ const SingleCategory = ({ posts, category }) => {
         </Col>
 
         <Col xs={24} xl={6}>
-          <Divider>Categories</Divider>
+          <Divider>Kategorije</Divider>
 
           {categories.map((c) => (
             <Link href={`/category/${c.slug}`} key={c._id}>
@@ -71,7 +71,7 @@ const SingleCategory = ({ posts, category }) => {
             </Link>
           ))}
 
-          <Divider>Latest Posts</Divider>
+          <Divider>Poslednje objave</Divider>
           {latestPosts.map((p) => (
             <Link href={`/post/${p.slug}`} key={p._id}>
               <a>

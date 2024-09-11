@@ -11,8 +11,6 @@ const Customize = () => {
   // context
   const [media, setMedia] = useContext(MediaContext);
   // state
-  //   const [title, setTitle] = useState("");
-  //   const [subtitle, setSubtitle] = useState("");
   const [loading, setLoading] = useState("");
 
   const {
@@ -24,24 +22,6 @@ const Customize = () => {
     setFullWidthImage,
   } = useHome();
 
-  //   const [fullWidthImage, setFullWidthImage] = useState("");
-
-  //   useEffect(() => {
-  //     loadHomepage();
-  //   }, []);
-
-  //   const loadHomepage = async () => {
-  //     try {
-  //       const { data } = await axios.get("/page/home");
-  //       //   console.log(data);
-  //       setTitle(data.title);
-  //       setSubtitle(data.subtitle);
-  //       setFullWidthImage(data.fullWidthImage);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-
   const handleSave = async () => {
     try {
       setLoading(true);
@@ -52,7 +32,7 @@ const Customize = () => {
         fullWidthImage: media?.selected?._id,
       });
       setLoading(false);
-      toast.success("Saved");
+      toast.success("Sacuvano!");
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -64,8 +44,8 @@ const Customize = () => {
       <Row>
         <Col span={24}>
           <Divider>
-            <h1>Customize home page</h1>
-            <p>Set full width image title and subtitle</p>
+            <h1>Uredi pocetnu stranicu</h1>
+            <p>Postavi pozadinu, naslov i podnaslov na pocetnoj strani</p>
           </Divider>
         </Col>
 
@@ -75,14 +55,14 @@ const Customize = () => {
           <Input
             style={{ margin: "20px 0px 20px 0px" }}
             size="large"
-            placeholder="Give it a title"
+            placeholder="Napisi neki naslov"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
 
           <Input
             size="large"
-            placeholder="Give it a subtitle"
+            placeholder="Napisi neki podnaslov"
             value={subtitle}
             onChange={(e) => setSubtitle(e.target.value)}
           />
@@ -94,7 +74,7 @@ const Customize = () => {
             loading={loading}
             block
           >
-            Save
+            Sacuvaj
           </Button>
         </Col>
 

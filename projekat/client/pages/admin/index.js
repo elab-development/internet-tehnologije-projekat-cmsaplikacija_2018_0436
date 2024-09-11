@@ -11,7 +11,7 @@ function Admin() {
       <Row>
         <Col span={24}>
           <Divider>
-            <h1>Statistics</h1>
+            <h1>Statistika</h1>
           </Divider>
         </Col>
       </Row>

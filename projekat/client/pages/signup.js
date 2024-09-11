@@ -36,13 +36,13 @@ function Signup() {
         setAuth(data);
         // save in local storage
         localStorage.setItem("auth", JSON.stringify(data));
-        toast.success("Successfully signed up");
+        toast.success("Uspesno kreiranje novog naloga pretplatnika!");
         setLoading(false);
         // redirect
         router.push("/admin");
       }
     } catch (err) {
-      toast.error("Signup failed. Try again.");
+      toast.error("Kreiranje naloga nije uspesno.");
       console.log(err);
       setLoading(false);
     }
@@ -51,7 +51,7 @@ function Signup() {
   return (
     <Row>
       <Col span={8} offset={8}>
-        <h1 style={{ paddingTop: "100px" }}>Signup</h1>
+        <h1 style={{ paddingTop: "100px" }}>Kreiranje naloga</h1>
 
         <Form
           name="normal_login"
@@ -62,7 +62,7 @@ function Signup() {
           {/* name */}
           <Form.Item
             name="name"
-            rules={[{ required: true, message: "Please input your name!" }]}
+            rules={[{ required: true, message: "Unesi svoje ime!" }]}
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
@@ -79,7 +79,7 @@ function Signup() {
           {/* password */}
           <Form.Item
             name="password"
-            rules={[{ required: true, message: "Please input your Password!" }]}
+            rules={[{ required: true, message: "Unesi sifru!" }]}
           >
             <Input.Password
               prefix={<LockOutlined className="site-form-item-icon" />}
@@ -95,12 +95,12 @@ function Signup() {
               className="login-form-button"
               loading={loading}
             >
-              Register
+              Registruj se
             </Button>
             <br />
             Or{" "}
             <Link href="/signin">
-              <a>Login now!</a>
+              <a>Prijavi se ako imas nalog!</a>
             </Link>
           </Form.Item>
         </Form>

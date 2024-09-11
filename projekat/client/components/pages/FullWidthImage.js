@@ -29,10 +29,10 @@ const FullWidthImage = ({
     >
       <h1>{title}</h1>
       <p style={{ fontSize: "18px", marginTop: "-100px" }}>{subtitle}</p>
-      <Link href="/subscriber">
+      <Link href="/posts">
         <a>
           <Button type="primary" size="large" icon={<SendOutlined />}>
-            Explore
+            Pregledaj objave
           </Button>
         </a>
       </Link>

@@ -3,9 +3,11 @@ const jwt = require("jsonwebtoken");
 const { hashPassword, comparePassword } = require("../helpers/auth");
 const nanoid = require("nanoid");
 import emaliValidator from "email-validator";
-// sendgrid
-const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(process.env.SENDGRID_KEY);
+//mailjet
+const mailjet = require("node-mailjet").apiConnect(
+  process.env.MAILJET_API_KEY,
+  process.env.MAILJET_API_SECRET
+);
 
 exports.signup = async (req, res) => {
   // console.log("HIT SIGNUP", req.body);
@@ -110,21 +112,37 @@ exports.forgotPassword = async (req, res) => {
   const resetCode = nanoid(5).toUpperCase();
   // save to db
   user.resetCode = resetCode;
-  user.save();
-  // prepare email
+  await user.save();
+
+  // prepare email data
   const emailData = {
-    from: process.env.EMAIL_FROM,
-    to: user.email,
-    subject: "Password reset code",
-    html: `<h1>Your password  reset code is: ${resetCode}</h1>`,
+    Messages: [
+      {
+        From: {
+          Email: process.env.EMAIL_FROM,
+          Name: "CMS aplikacija",
+        },
+        To: [
+          {
+            Email: user.email,
+            Name: user.name,
+          },
+        ],
+        Subject: "Password reset code",
+        HTMLPart: `<h1>Your password reset code is: ${resetCode}</h1>`,
+      },
+    ],
   };
-  // send email
+
+  // send email using Mailjet
   try {
-    const data = await sgMail.send(emailData);
-    console.log(data);
+    const result = await mailjet
+      .post("send", { version: "v3.1" })
+      .request(emailData);
+    console.log(result.body);
     res.json({ ok: true });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.json({ ok: false });
   }
 };
@@ -167,51 +185,64 @@ export const currentUser = async (req, res) => {
 export const createUser = async (req, res) => {
   try {
     const { name, email, password, role, checked, website } = req.body;
+
     if (!name) {
-      return res.json({
-        error: "Name is required",
-      });
+      return res.json({ error: "Name is required" });
     }
     if (!email) {
-      return res.json({
-        error: "Email is required",
-      });
+      return res.json({ error: "Email is required" });
     }
     if (!password || password.length < 6) {
       return res.json({
         error: "Password is required and should be 6 characters long",
       });
     }
-    // if user exist
+
+    // Check if user already exists
     const exist = await User.findOne({ email });
     if (exist) {
       return res.json({ error: "Email is taken" });
     }
-    // hash password
+
+    // Hash the password
     const hashedPassword = await hashPassword(password);
 
-    // if checked, send email with login details
+    // Send email with login details if 'checked' is true
     if (checked) {
-      // prepare email
+      // Prepare email
       const emailData = {
-        to: email,
-        from: process.env.EMAIL_FROM,
-        subject: "Account created",
-        html: `
-        <h1>Hi ${name}</h1>
-        <p>Your CMS account has been created successfully.</p>
-        <h3>Your login details</h3>
-        <p style="color:red;">Email: ${email}</p>
-        <p style="color:red;">Password: ${password}</p>
-        <small>We recommend you to change your password after login.</small>
-        `,
+        Messages: [
+          {
+            From: {
+              Email: process.env.EMAIL_FROM,
+              Name: "Your Company",
+            },
+            To: [
+              {
+                Email: email,
+                Name: name,
+              },
+            ],
+            Subject: "Account created",
+            HTMLPart: `
+              <h1>Hi ${name}</h1>
+              <p>Your CMS account has been created successfully.</p>
+              <h3>Your login details</h3>
+              <p style="color:red;">Email: ${email}</p>
+              <p style="color:red;">Password: ${password}</p>
+              <small>We recommend you change your password after logging in.</small>
+            `,
+          },
+        ],
       };
 
       try {
-        const data = await sgMail.send(emailData);
-        console.log("email sent => ", data);
+        const response = await mailjet
+          .post("send", { version: "v3.1" })
+          .request(emailData);
+        console.log("Email sent =>", response.body);
       } catch (err) {
-        console.log(err);
+        console.log("Mailjet error:", err);
       }
     }
 
@@ -227,10 +258,10 @@ export const createUser = async (req, res) => {
       const { password, ...rest } = user._doc;
       return res.json(rest);
     } catch (err) {
-      console.log(err);
+      console.log("User creation error:", err);
     }
   } catch (err) {
-    console.log(err);
+    console.log("Error:", err);
   }
 };
 

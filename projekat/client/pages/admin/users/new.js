@@ -34,12 +34,12 @@ const NewUser = () => {
         toast.error(data.error);
         setLoading(false);
       } else {
-        toast.success("User created successfully");
+        toast.success("Korisnik kreiran uspesno!");
         setLoading(false);
       }
     } catch (err) {
       console.log(err);
-      toast.error("Signup failed. Try again.");
+      toast.error("Neuspeh!");
       setLoading(false);
     }
   };
@@ -49,11 +49,11 @@ const NewUser = () => {
     <AdminLayout>
       <Row>
         <Col span={12} offset={6}>
-          <h4 style={{ marginBottom: "-10px" }}>Add new user</h4>
+          <h4 style={{ marginBottom: "-10px" }}>Dodaj novog korisnika</h4>
           <Input
             style={{ margin: "20px 0px 10px 0px" }}
             size="large"
-            placeholder="Full name"
+            placeholder="Puno ime"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -67,7 +67,7 @@ const NewUser = () => {
           <Input
             style={{ margin: "10px 0px 10px 0px" }}
             size="large"
-            placeholder="Website"
+            placeholder="Vebsajt"
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
           />
@@ -78,12 +78,12 @@ const NewUser = () => {
               size="large"
               style={{ margin: "10px 0px 10px 0px" }}
             >
-              Generate password
+              Generisi sifru
             </Button>
             <Input.Password
               style={{ margin: "10px 0px 10px 0px" }}
               size="large"
-              placeholder="Password"
+              placeholder="Sifra"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -94,8 +94,8 @@ const NewUser = () => {
             style={{ margin: "10px 0px 10px 0px", width: "100%" }}
             onChange={(e) => setRole(e)}
           >
-            <Select.Option value="Subscriber">Subscriber</Select.Option>
-            <Select.Option value="Author">Author</Select.Option>
+            <Select.Option value="Subscriber">Pretplatnik</Select.Option>
+            <Select.Option value="Author">Autor</Select.Option>
             <Select.Option value="Admin">Admin</Select.Option>
           </Select>
 
@@ -103,7 +103,7 @@ const NewUser = () => {
             checked={checked}
             onChange={(e) => setChecked(e.target.checked)}
           >
-            Send the new user an email about their account.
+            Posalji mejl korisniku o kreiranju naloga
           </Checkbox>
 
           <Button

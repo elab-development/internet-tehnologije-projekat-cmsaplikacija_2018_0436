@@ -66,13 +66,13 @@ const TopNav = () => {
 
       <Menu.Item key="posts" icon={<DatabaseOutlined />}>
         <Link href="/posts">
-          <a>Posts</a>
+          <a>Objave</a>
         </Link>
       </Menu.Item>
 
       <Menu.Item key="contact" icon={<MailOutlined />}>
         <Link href="/contact">
-          <a>Contact</a>
+          <a>Kontakt strana</a>
         </Link>
       </Menu.Item>
 
@@ -84,12 +84,12 @@ const TopNav = () => {
             icon={<UserAddOutlined />}
           >
             <Link href="/signup">
-              <a>Signup</a>
+              <a>Registracija</a>
             </Link>
           </Menu.Item>
           <Menu.Item key="signin" icon={<UserOutlined />}>
             <Link href="/signin">
-              <a>Signin</a>
+              <a>Prijavljivanje</a>
             </Link>
           </Menu.Item>
         </>
@@ -106,7 +106,7 @@ const TopNav = () => {
             <Menu.ItemGroup title="Management">
               <Menu.Item key="setting:2">
                 <Link href={roleBasedLink()}>
-                  <a>Dashboard</a>
+                  <a>Kontrolni centar</a>
                 </Link>
               </Menu.Item>
             </Menu.ItemGroup>
@@ -117,7 +117,7 @@ const TopNav = () => {
             key="signout"
             icon={<LogoutOutlined />}
           >
-            <a>Sign out</a>
+            <a>Odjavi se</a>
           </Menu.Item>
         </>
       )}
